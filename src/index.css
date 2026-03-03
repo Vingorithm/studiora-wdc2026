@@ -109,6 +109,58 @@
   @apply inline-block px-2 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary mr-1;
 }
 
+/* Note editor (contenteditable) */
+.note-editor:empty:before {
+  content: attr(data-placeholder);
+  color: #CBD5E1;
+  pointer-events: none;
+}
+.note-editor h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1E293B;
+  margin: 1.25rem 0 0.5rem;
+  line-height: 1.2;
+}
+.note-editor h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 1rem 0 0.4rem;
+  line-height: 1.3;
+}
+.note-editor p { margin: 0.25rem 0; }
+.note-editor ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+.note-editor ol { list-style: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
+.note-editor li { margin: 0.2rem 0; }
+.note-editor mark { background: #FEF9C3; color: inherit; padding: 0 2px; border-radius: 3px; }
+.note-editor strong { font-weight: 700; }
+.note-editor em { font-style: italic; }
+.note-editor u { text-decoration: underline; }
+.note-editor .checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  cursor: default;
+}
+.note-editor .checklist-item input[type="checkbox"] {
+  width: 16px; height: 16px;
+  cursor: pointer;
+  accent-color: #5D8BF4;
+}
+/* Note view content */
+.note-view-content h1 { font-size: 1.5rem; font-weight: 800; color: #1E293B; margin: 1rem 0 0.5rem; font-family: 'Poppins', sans-serif; }
+.note-view-content h2 { font-size: 1.2rem; font-weight: 700; color: #1E293B; margin: 0.75rem 0 0.4rem; font-family: 'Poppins', sans-serif; }
+.note-view-content p { margin: 0.3rem 0; line-height: 1.7; }
+.note-view-content ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+.note-view-content ol { list-style: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
+.note-view-content mark { background: #FEF9C3; padding: 0 2px; border-radius: 3px; }
+.note-view-content strong { font-weight: 700; }
+.note-view-content em { font-style: italic; }
+
 /* Streak fire */
 @keyframes fireFlicker {
   0%, 100% { transform: scaleY(1) rotate(-2deg); }

@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Tasks from './pages/Tasks'
 import Notes from './pages/Notes'
 import Focus from './pages/Focus'
+import NewNote from './pages/NewNote'
 
 export default function App() {
   const location = useLocation()
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/notes" element={<Notes />} />
             <Route path="/focus" element={<Focus />} />
+            <Route path="/new-note" element={<NewNote />} />
           </Routes>
         </main>
       </div>

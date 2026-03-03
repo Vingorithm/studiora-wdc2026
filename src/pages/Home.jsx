@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import PomodoroSection from '../components/PomodoroSection'
 
 const features = [
   {
@@ -34,9 +35,9 @@ const features = [
 ]
 
 const testimonials = [
-  { name: 'Kevin P.', major: 'Computer Science', text: 'Studiora helped me go from overwhelmed to organized in one week. My GPA improved this semester!', avatar: '👩‍💻' },
-  { name: 'Joko W.', major: 'Medicine', text: 'The focus timer is a game-changer. I can finally study for 3 hours without checking my phone.', avatar: '👨‍⚕️' },
-  { name: 'Pauline T.', major: 'Business', text: 'The weekly planner lets me see exactly when I\'m studying and where I need to improve.', avatar: '👩‍💼' },
+  { name: 'Sarah K.', major: 'Computer Science', text: 'Studiora helped me go from overwhelmed to organized in one week. My GPA improved this semester!', avatar: '👩‍💻' },
+  { name: 'Marcus L.', major: 'Medicine', text: 'The focus timer is a game-changer. I can finally study for 3 hours without checking my phone.', avatar: '👨‍⚕️' },
+  { name: 'Priya R.', major: 'Business', text: 'The weekly planner lets me see exactly when I\'m studying and where I need to improve.', avatar: '👩‍💼' },
 ]
 
 export default function Home() {
@@ -55,7 +56,7 @@ export default function Home() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-card border border-primary/15 mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
-            <span className="text-sm font-semibold text-slate-600 font-inter">Designed for University Students</span>
+            <span className="text-sm font-semibold text-slate-600 font-inter">Designed for university students</span>
           </div>
 
           {/* Headline */}
@@ -193,6 +194,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Pomodoro Section */}
+      <PomodoroSection />
 
       {/* Testimonials */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
