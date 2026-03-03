@@ -37,65 +37,283 @@ const features = [
 const testimonials = [
   { name: 'Sarah K.', major: 'Computer Science', text: 'Studiora helped me go from overwhelmed to organized in one week. My GPA improved this semester!', avatar: '👩‍💻' },
   { name: 'Marcus L.', major: 'Medicine', text: 'The focus timer is a game-changer. I can finally study for 3 hours without checking my phone.', avatar: '👨‍⚕️' },
-  { name: 'Priya R.', major: 'Business', text: 'The weekly planner lets me see exactly when I\'m studying and where I need to improve.', avatar: '👩‍💼' },
+  { name: 'Priya R.', major: 'Business', text: "The weekly planner lets me see exactly when I'm studying and where I need to improve.", avatar: '👩‍💼' },
 ]
+
+function HeroDashboardMockup() {
+  return (
+    <div className="relative w-full max-w-lg mx-auto lg:mx-0 animate-float" style={{ animationDelay: '0.5s' }}>
+      {/* Glow halo behind card stack */}
+      <div className="absolute inset-0 rounded-3xl blur-3xl opacity-30"
+        style={{ background: 'radial-gradient(ellipse at 60% 40%, #5D8BF4 0%, #C4B5FD 60%, transparent 100%)', transform: 'scale(1.15)' }} />
+
+      {/* Back card – depth layer */}
+      <div className="absolute top-6 left-6 right-0 bottom-0 rounded-3xl"
+        style={{ background: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 8px 32px rgba(93,139,244,0.12)' }} />
+
+      {/* Mid card */}
+      <div className="absolute top-3 left-3 right-2 bottom-1 rounded-3xl"
+        style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: '0 12px 40px rgba(93,139,244,0.14)' }} />
+
+      {/* Main card */}
+      <div className="relative rounded-3xl overflow-hidden"
+        style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 24px 64px rgba(93,139,244,0.18), 0 0 0 1px rgba(93,139,244,0.08)' }}>
+
+        {/* Card header */}
+        <div className="px-5 pt-5 pb-4 flex items-center justify-between border-b border-slate-100/80">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-bold font-poppins"
+              style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>S</div>
+            <span className="text-sm font-bold font-poppins text-darkText">Studiora</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
+            <span className="text-xs text-slate-400 font-inter">Live</span>
+          </div>
+        </div>
+
+        <div className="p-5 space-y-4">
+          {/* Stat row */}
+          <div className="grid grid-cols-3 gap-2.5">
+            {[
+              { val: '12', label: 'Tasks', color: '#5D8BF4', bg: '#EEF2FF' },
+              { val: '7🔥', label: 'Streak', color: '#F97316', bg: '#FFF7ED' },
+              { val: '4.5h', label: 'Focus', color: '#7C3AED', bg: '#F5F3FF' },
+            ].map(s => (
+              <div key={s.label} className="rounded-xl px-3 py-2.5 text-center" style={{ background: s.bg }}>
+                <p className="text-base font-extrabold font-poppins" style={{ color: s.color }}>{s.val}</p>
+                <p className="text-xs text-slate-400 font-inter mt-0.5">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Task items */}
+          <div className="space-y-2">
+            {[
+              { title: 'Calculus Problem Set', priority: 'High', done: false, color: '#F87171' },
+              { title: 'Physics Lab Report', priority: 'Medium', done: false, color: '#FDBA74' },
+              { title: 'Read Chapter 7–9', priority: 'Low', done: true, color: '#22C55E' },
+            ].map((task, i) => (
+              <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50/80">
+                <div className="w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors"
+                  style={{ borderColor: task.color, background: task.done ? task.color : 'transparent' }}>
+                  {task.done && <span style={{ fontSize: '8px', color: 'white' }}>✓</span>}
+                </div>
+                <span className={`text-xs font-inter flex-1 ${task.done ? 'line-through text-slate-400' : 'text-slate-600'}`}>{task.title}</span>
+                <span className="text-xs font-semibold font-inter px-2 py-0.5 rounded-lg"
+                  style={{ background: task.color + '18', color: task.color }}>{task.priority}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Mini focus timer strip */}
+          <div className="rounded-2xl p-3.5 flex items-center gap-4"
+            style={{ background: 'linear-gradient(135deg, #1e1b4b, #1e3a5f)' }}>
+            <div className="relative w-10 h-10 flex-shrink-0">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3.5" />
+                <circle cx="20" cy="20" r="16" fill="none" stroke="#5D8BF4" strokeWidth="3.5"
+                  strokeLinecap="round" strokeDasharray={`${2 * Math.PI * 16}`}
+                  strokeDashoffset={`${2 * Math.PI * 16 * 0.38}`} transform="rotate(-90 20 20)" />
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center text-white font-bold font-poppins" style={{ fontSize: '9px' }}>🎯</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white text-xs font-semibold font-inter">Focus Session</p>
+              <p className="text-white/50 text-xs font-inter mt-0.5">15:32 remaining</p>
+            </div>
+            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-sm"
+              style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>⏸</div>
+          </div>
+
+          {/* Progress bar */}
+          <div>
+            <div className="flex justify-between text-xs font-inter text-slate-400 mb-1.5">
+              <span>Daily Goal</span><span>72% complete</span>
+            </div>
+            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: '72%', background: 'linear-gradient(90deg, #5D8BF4, #C4B5FD)' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating badge – top right */}
+      <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-soft border border-slate-100 px-3.5 py-2.5 flex items-center gap-2 animate-float" style={{ animationDelay: '1s' }}>
+        <span className="text-lg">⭐</span>
+        <div>
+          <p className="text-xs font-bold font-poppins text-darkText leading-none">4.9 Rating</p>
+          <p className="text-xs text-slate-400 font-inter">10K+ students</p>
+        </div>
+      </div>
+
+      {/* Floating badge – bottom left */}
+      <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-soft border border-slate-100 px-3.5 py-2.5 flex items-center gap-2 animate-float" style={{ animationDelay: '2.5s' }}>
+        <span className="text-lg">✅</span>
+        <div>
+          <p className="text-xs font-bold font-poppins text-darkText leading-none">500K+ Tasks</p>
+          <p className="text-xs text-slate-400 font-inter">Completed this month</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   const navigate = useNavigate()
 
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-aurora-soft">
-        {/* Background blobs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/15 rounded-full blur-3xl animate-float" />
-        <div className="absolute top-40 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-10 left-1/2 w-64 h-64 bg-accent/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-card border border-primary/15 mb-8 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
-            <span className="text-sm font-semibold text-slate-600 font-inter">Designed for university students</span>
+      {/* ── HERO ─────────────────────────────────────────────────── */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+
+        {/* Background gradient base */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(145deg, #EEF2FF 0%, #F8FAFC 35%, #F5F3FF 70%, #FFF7ED 100%)'
+        }} />
+
+        {/* Radial glow center */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: 'radial-gradient(ellipse 80% 60% at 65% 50%, rgba(93,139,244,0.10) 0%, rgba(196,181,253,0.08) 50%, transparent 100%)'
+        }} />
+
+        {/* Floating blobs */}
+        <div className="absolute -top-24 -left-24 w-[480px] h-[480px] rounded-full blur-3xl opacity-40 animate-float pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(93,139,244,0.22), transparent 70%)' }} />
+        <div className="absolute top-1/3 -right-32 w-[520px] h-[520px] rounded-full blur-3xl opacity-35 animate-float pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(196,181,253,0.28), transparent 70%)', animationDelay: '2.5s' }} />
+        <div className="absolute -bottom-20 left-1/3 w-[360px] h-[360px] rounded-full blur-3xl opacity-30 animate-float pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(253,186,116,0.20), transparent 70%)', animationDelay: '4s' }} />
+
+        {/* Grid texture overlay – very subtle */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'radial-gradient(rgba(93,139,244,0.06) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }} />
+
+        {/* Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-0 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            {/* ── LEFT: Text ── */}
+            <div className="flex flex-col gap-8 text-center lg:text-left">
+
+              {/* Badge */}
+              <div className="flex justify-center lg:justify-start animate-fade-in">
+                <div className="inline-flex items-center gap-2.5 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-card border border-primary/12">
+                  <span className="w-2 h-2 rounded-full bg-success animate-pulse-slow flex-shrink-0" />
+                  <span className="text-sm font-semibold text-slate-600 font-inter">Designed for university students</span>
+                </div>
+              </div>
+
+              {/* Headline */}
+              <div className="animate-slide-up">
+                <h1 className="text-5xl sm:text-6xl lg:text-[64px] font-extrabold font-poppins text-darkText leading-[1.08] tracking-tight">
+                  <span className="block">
+                    <span style={{
+                      background: 'linear-gradient(135deg, #5D8BF4, #818CF8)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}>Organize</span>{' '}
+                    <span className="text-darkText">Your Study.</span>
+                  </span>
+                  <span className="block mt-2">
+                    <span className="text-darkText">Illuminate </span>
+                    <span style={{
+                      background: 'linear-gradient(135deg, #C4B5FD, #E879F9)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}>Your Future.</span>
+                  </span>
+                </h1>
+              </div>
+
+              {/* Sub-headline */}
+              <p className="text-lg text-slate-500 font-inter leading-relaxed max-w-xl mx-auto lg:mx-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                Studiora transforms your chaotic academic life into a{' '}
+                <span className="text-darkText font-semibold">structured</span>,{' '}
+                <span className="text-darkText font-semibold">focused</span>, and{' '}
+                <span className="text-darkText font-semibold">inspiring</span>{' '}
+                study journey — all in one elegant dashboard.
+              </p>
+
+              {/* CTA buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-slide-up" style={{ animationDelay: '0.18s' }}>
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="inline-flex items-center justify-center gap-2.5 font-bold font-poppins text-base text-white px-8 py-4 rounded-full shadow-glow hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
+                  style={{ background: 'linear-gradient(135deg, #5D8BF4 0%, #C4B5FD 100%)' }}
+                >
+                  <span>🚀</span> Start Organizing
+                </button>
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('features')
+                    el ? el.scrollIntoView({ behavior: 'smooth' }) : navigate('/dashboard')
+                  }}
+                  className="inline-flex items-center justify-center gap-2 font-semibold font-inter text-base text-slate-600 bg-white/70 backdrop-blur-sm border border-slate-200 px-8 py-4 rounded-full hover:bg-white hover:border-primary/30 hover:text-primary transition-all duration-300 shadow-card"
+                >
+                  Explore Features
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Social proof avatars + stat */}
+              <div className="flex items-center gap-4 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: '0.28s' }}>
+                <div className="flex -space-x-2.5">
+                  {['👩‍💻', '👨‍⚕️', '👩‍💼', '👨‍🎓', '👩‍🔬'].map((a, i) => (
+                    <div key={i} className="w-9 h-9 rounded-full bg-white border-2 border-white shadow-card flex items-center justify-center text-base"
+                      style={{ zIndex: 5 - i }}>
+                      {a}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 mb-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FDBA74">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 font-inter"><span className="font-semibold text-darkText">10,000+</span> students trust Studiora</p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── RIGHT: Dashboard Mockup ── */}
+            <div className="flex justify-center lg:justify-end animate-fade-in" style={{ animationDelay: '0.22s' }}>
+              <HeroDashboardMockup />
+            </div>
           </div>
+        </div>
 
-          {/* Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold font-poppins text-darkText mb-6 leading-tight animate-slide-up">
-            Organize Your Study.<br />
-            <span className="aurora-text">Illuminate Your Future.</span>
-          </h1>
+        {/* Bottom fade into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent, #F8FAFC)' }} />
+      </section>
 
-          <p className="text-lg sm:text-xl text-slate-500 font-inter max-w-2xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            Studiora is your all-in-one academic productivity platform. Manage tasks, block study time, take smart notes, and focus deeper — all in one beautiful dashboard.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="btn-primary text-base px-8 py-4 shadow-glow"
-            >
-              🚀 Start Organizing — It's Free
-            </button>
-            <button
-              onClick={() => navigate('/focus')}
-              className="btn-secondary text-base px-8 py-4"
-            >
-              🎯 Try Focus Mode
-            </button>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex flex-wrap justify-center gap-8 mt-16 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+      {/* Stats strip */}
+      <section className="bg-white border-y border-slate-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0 sm:divide-x divide-slate-100">
             {[
-              { value: '10K+', label: 'Students' },
+              { value: '10K+', label: 'Active Students' },
               { value: '500K+', label: 'Tasks Completed' },
-              { value: '98%', label: 'Satisfaction' },
-              { value: '4.9★', label: 'App Rating' },
+              { value: '98%', label: 'Satisfaction Rate' },
+              { value: '4.9★', label: 'Average Rating' },
             ].map(stat => (
-              <div key={stat.label} className="text-center">
-                <p className="text-3xl font-bold font-poppins aurora-text">{stat.value}</p>
-                <p className="text-sm text-slate-500 font-inter mt-1">{stat.label}</p>
+              <div key={stat.label} className="text-center sm:px-8">
+                <p className="text-3xl font-extrabold font-poppins"
+                  style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                  {stat.value}
+                </p>
+                <p className="text-sm text-slate-400 font-inter mt-1">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -109,9 +327,7 @@ export default function Home() {
           <p className="text-slate-500 font-inter">Everything you need, elegantly organized.</p>
         </div>
 
-        {/* Mock Dashboard */}
         <div className="card p-0 overflow-hidden shadow-glow">
-          {/* Mock header bar */}
           <div className="bg-aurora p-4 flex items-center gap-3">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-white/40" />
@@ -122,7 +338,6 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-0 bg-slate-50">
-            {/* Sidebar */}
             <div className="bg-white border-r border-slate-100 p-4 hidden md:block">
               <div className="flex items-center gap-2 mb-6">
                 <div className="w-7 h-7 rounded-lg bg-aurora flex items-center justify-center text-white text-sm font-bold">S</div>
@@ -135,31 +350,27 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Main */}
             <div className="col-span-3 p-6">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
                 {[
-                  { label: 'Total Tasks', value: '24', icon: '✓', color: 'bg-primary/10 text-primary' },
-                  { label: 'Focus Hours', value: '12h', icon: '⏱', color: 'bg-purple-50 text-purple-500' },
-                  { label: 'Streak', value: '7🔥', icon: '', color: 'bg-amber-50 text-amber-500' },
-                  { label: 'Done Today', value: '5', icon: '⭐', color: 'bg-emerald-50 text-emerald-500' },
+                  { label: 'Total Tasks', value: '24', color: 'text-primary' },
+                  { label: 'Focus Hours', value: '12h', color: 'text-purple-500' },
+                  { label: 'Streak', value: '7🔥', color: 'text-amber-500' },
+                  { label: 'Done Today', value: '5', color: 'text-emerald-500' },
                 ].map(s => (
                   <div key={s.label} className="bg-white rounded-xl p-3 shadow-card">
-                    <div className={`text-xl font-bold font-poppins ${s.color.split(' ')[1]}`}>{s.value}</div>
+                    <div className={`text-xl font-bold font-poppins ${s.color}`}>{s.value}</div>
                     <div className="text-xs text-slate-400 font-inter mt-1">{s.label}</div>
                   </div>
                 ))}
               </div>
-              {/* Mini chart placeholder */}
               <div className="bg-white rounded-xl p-4 shadow-card">
                 <p className="text-xs font-semibold font-inter text-slate-500 mb-3">Weekly Study Hours</p>
                 <div className="flex items-end gap-2 h-16">
                   {[4, 6, 5, 8, 7, 9, 6].map((h, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <div
-                        className="w-full rounded-t-md bg-gradient-to-t from-primary to-secondary opacity-80"
-                        style={{ height: `${(h / 9) * 100}%` }}
-                      />
+                      <div className="w-full rounded-t-md bg-gradient-to-t from-primary to-secondary opacity-80"
+                        style={{ height: `${(h / 9) * 100}%` }} />
                       <span className="text-xs text-slate-300 font-inter">{['M','T','W','T','F','S','S'][i]}</span>
                     </div>
                   ))}
@@ -171,7 +382,7 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-aurora-soft">
+      <section id="features" className="py-20 bg-aurora-soft">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="section-title mb-3">Everything You Need to Excel</h2>
@@ -179,11 +390,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f, i) => (
-              <div
-                key={f.title}
-                className="card card-hover group animate-slide-up"
-                style={{ animationDelay: `${i * 0.08}s` }}
-              >
+              <div key={f.title} className="card card-hover group animate-slide-up" style={{ animationDelay: `${i * 0.08}s` }}>
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${f.color} flex items-center justify-center text-2xl mb-4 shadow-soft group-hover:scale-110 transition-transform duration-300`}>
                   {f.icon}
                 </div>
@@ -209,9 +416,7 @@ export default function Home() {
             <div key={t.name} className="card card-hover animate-slide-up" style={{ animationDelay: `${i * 0.1}s` }}>
               <p className="text-sm text-slate-600 font-inter italic leading-relaxed mb-4">"{t.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-aurora-soft flex items-center justify-center text-2xl">
-                  {t.avatar}
-                </div>
+                <div className="w-10 h-10 rounded-2xl bg-aurora-soft flex items-center justify-center text-2xl">{t.avatar}</div>
                 <div>
                   <p className="font-semibold font-poppins text-darkText text-sm">{t.name}</p>
                   <p className="text-xs text-slate-400 font-inter">{t.major}</p>
