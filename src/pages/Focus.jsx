@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
+import { RiFocus3Line } from 'react-icons/ri';
+import { BsFire } from 'react-icons/bs';
+import { MdAccessTimeFilled } from 'react-icons/md';
 
 function useSessionStats() {
   const [sessions, setSessions] = useState(() => parseInt(localStorage.getItem('studiora_sessions') || '0'))
@@ -21,13 +24,13 @@ function useSessionStats() {
 }
 
 const tips = [
-  "Put your phone in another room. Out of sight, out of mind. 📵",
-  "Close unnecessary browser tabs before starting. 🖥️",
-  "Hydrate! Keep a water bottle at your desk. 💧",
-  "Write down what you want to accomplish this session. ✍️",
-  "Short breaks are crucial — your brain needs to rest. 🧠",
-  "The hardest part is starting. Once you begin, momentum builds. 🚀",
-  "Review your notes after each Pomodoro to reinforce memory. 📚",
+  "Put your phone in another room. Out of sight, out of mind.",
+  "Close unnecessary browser tabs before starting.",
+  "Hydrate! Keep a water bottle at your desk.",
+  "Write down what you want to accomplish this session.",
+  "Short breaks are crucial — your brain needs to rest.",
+  "The hardest part is starting. Once you begin, momentum builds.",
+  "Review your notes after each Pomodoro to reinforce memory.",
 ]
 
 export default function Focus() {
@@ -127,7 +130,7 @@ export default function Focus() {
 
         {/* Tip */}
         <div className="mt-10 max-w-sm text-center">
-          <p className="text-white/40 text-xs font-inter italic">{tips[tipIndex]}</p>
+          <p className="text-white/40 text-xs font-inter italic">{tips[tipIndex]}</p><br></br>
         </div>
       </div>
 
@@ -135,16 +138,24 @@ export default function Focus() {
       <div className="relative z-10 px-6 pb-8">
         <div className="max-w-4xl mx-auto">
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="text-white grid grid-cols-3 gap-4 mb-6">
             {[
-              { label: 'Sessions Today', value: sessions, icon: '🎯' },
-              { label: 'Focus Time', value: `${hours}h ${mins}m`, icon: '⏱' },
-              { label: 'Study Streak', value: `${parseInt(localStorage.getItem('studiora_streak') || '7')} days`, icon: '🔥' },
+              { label: 'Sessions Today', value: sessions, icon: <RiFocus3Line /> },
+              { label: 'Focus Time', value: `${hours}h ${mins}m`, icon: <MdAccessTimeFilled /> },
+              { label: 'Study Streak', value: `${parseInt(localStorage.getItem('studiora_streak') || '7')} days`, icon: <BsFire /> },
             ].map(stat => (
-              <div key={stat.label} className="bg-white/8 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/10">
+              <div
+                key={stat.label}
+                className="bg-white/8 backdrop-blur-sm rounded-2xl p-4 border border-white/10 
+             flex flex-col items-center justify-center text-center"
+              >
                 <p className="text-2xl mb-1">{stat.icon}</p>
-                <p className="text-white font-bold font-poppins text-xl">{stat.value}</p>
-                <p className="text-white/40 font-inter text-xs mt-1">{stat.label}</p>
+                <p className="text-white font-bold font-poppins text-xl">
+                  {stat.value}
+                </p>
+                <p className="text-white/40 font-inter text-xs mt-1">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

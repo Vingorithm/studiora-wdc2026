@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { MdEdit, MdDelete } from 'react-icons/md'
+import { FaBook } from "react-icons/fa6";
 
 function stripHtml(html) {
   const div = document.createElement('div')
@@ -33,8 +35,8 @@ export default function NoteViewModal({ note, onClose, onDelete }) {
               <h2 className="text-2xl font-bold font-poppins text-darkText leading-tight break-words">
                 {note.title || 'Untitled Note'}
               </h2>
-              <p className="text-xs text-slate-400 font-inter mt-1.5">
-                {note.subject && <span className="text-primary font-semibold mr-3">📚 {note.subject}</span>}
+              <p className="flextext-xs text-slate-400 font-inter mt-1.5">
+                {note.subject && <span className="flex items-center gap-2 text-primary font-semibold mr-3"><FaBook /> {note.subject}</span>}
                 {new Date(note.createdAt || note.updatedAt).toLocaleDateString('en-US', {
                   month: 'long', day: 'numeric', year: 'numeric'
                 })}
@@ -73,15 +75,15 @@ export default function NoteViewModal({ note, onClose, onDelete }) {
           <div className="flex gap-3 pt-4 border-t border-slate-100">
             <button
               onClick={handleEdit}
-              className="btn-primary text-sm py-2.5 px-6 flex items-center gap-2"
+              className="flex items-center gap-2 btn-primary text-sm py-2.5 px-6 flex items-center gap-2"
             >
-              ✏️ Edit Note
+              <MdEdit /> Edit Note
             </button>
             <button
               onClick={() => { onDelete(note.id); onClose() }}
-              className="px-5 py-2.5 rounded-xl text-sm font-semibold font-inter text-danger bg-danger/8 hover:bg-danger/15 transition-colors"
+              className=" flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold font-inter text-danger bg-danger/8 hover:bg-danger/15 transition-colors"
             >
-              🗑 Delete
+              <MdDelete /> Delete
             </button>
             <button onClick={onClose} className="btn-secondary text-sm py-2.5 px-5 ml-auto">
               Close

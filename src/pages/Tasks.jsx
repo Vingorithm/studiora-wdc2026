@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import TaskCard from '../components/TaskCard'
+import { IoSearchSharp } from "react-icons/io5";
+import { FaCalendarAlt, FaClipboard } from "react-icons/fa";
 
 const STORAGE_KEY = 'studiora_tasks'
 
@@ -141,11 +143,11 @@ export default function Tasks() {
         </div>
         <div className="flex gap-2">
           <div className="flex rounded-xl border border-slate-200 overflow-hidden">
-            <button onClick={() => setView('board')} className={`px-4 py-2 text-sm font-inter font-medium transition-colors ${view === 'board' ? 'bg-primary text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
-              📋 Board
+            <button onClick={() => setView('board')} className={`px-4 py-2 text-sm font-inter font-medium transition-colors flex items-center gap-1 ${view === 'board' ? 'bg-primary text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <FaClipboard /> Board
             </button>
-            <button onClick={() => setView('calendar')} className={`px-4 py-2 text-sm font-inter font-medium transition-colors ${view === 'calendar' ? 'bg-primary text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
-              📅 Calendar
+            <button onClick={() => setView('calendar')} className={`px-4 py-2 text-sm font-inter font-medium transition-colors flex items-center gap-1 ${view === 'calendar' ? 'bg-primary text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <FaCalendarAlt /> Calendar
             </button>
           </div>
           <button onClick={() => { setEditTask(null); setModalOpen(true) }} className="btn-primary text-sm py-2.5 px-5">
@@ -158,20 +160,20 @@ export default function Tasks() {
         <>
           {/* Search + filters */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
-            <input
-              className="input-field max-w-xs"
-              placeholder="🔍 Search tasks..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"><IoSearchSharp /></span>
+              <input className="input-field pl-9 w-full sm:w-72"
+                placeholder="Search tasks..."
+                value={search}
+                onChange={e => setSearch(e.target.value)} />
+            </div>
             <div className="flex gap-2 flex-wrap">
               {filters.map(f => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium font-inter transition-all duration-200 ${
-                    filter === f ? 'bg-primary text-white shadow-soft' : 'bg-white text-slate-500 border border-slate-200 hover:border-primary/30'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium font-inter transition-all duration-200 ${filter === f ? 'bg-primary text-white shadow-soft' : 'bg-white text-slate-500 border border-slate-200 hover:border-primary/30'
+                    }`}
                 >
                   {f} <span className="ml-1.5 opacity-70">{counts[f]}</span>
                 </button>

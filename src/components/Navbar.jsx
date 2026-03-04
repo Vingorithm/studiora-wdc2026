@@ -1,12 +1,17 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { TbLayoutDashboardFilled } from "react-icons/tb";
+import { FaTasks } from "react-icons/fa";
+import { LuNotebook } from "react-icons/lu";
+import { RiFocus3Line } from "react-icons/ri";
 
 const navLinks = [
-  { to: '/dashboard', label: 'Dashboard', icon: '⬡' },
-  { to: '/tasks', label: 'Tasks', icon: '✓' },
-  { to: '/notes', label: 'Notes', icon: '📝' },
-  { to: '/focus', label: 'Focus', icon: '🎯' },
+  { to: '/dashboard', label: 'Dashboard', icon: <TbLayoutDashboardFilled /> },
+  { to: '/tasks', label: 'Tasks', icon: <FaTasks /> },
+  { to: '/notes', label: 'Notes', icon: <LuNotebook /> },
+  { to: '/focus', label: 'Focus', icon: <RiFocus3Line /> },
 ]
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,16 +32,15 @@ export default function Navbar() {
           </NavLink>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 flex-1 justify-center">
             {navLinks.map(link => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 font-inter ${
-                    isActive
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-slate-500 hover:text-primary hover:bg-primary/5'
+                  `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 font-inter ${isActive
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-slate-500 hover:text-primary hover:bg-primary/5'
                   }`
                 }
               >
@@ -46,15 +50,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <NavLink
-              to="/focus"
-              className="btn-primary text-sm py-2 px-5"
-            >
-              🎯 Focus Now
-            </NavLink>
-          </div>
 
           {/* Mobile menu button */}
           <button
@@ -79,21 +74,13 @@ export default function Navbar() {
                 to={link.to}
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium mb-1 transition-all font-inter ${
-                    isActive ? 'bg-primary/10 text-primary' : 'text-slate-600 hover:bg-slate-50'
+                  `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium mb-1 transition-all font-inter ${isActive ? 'bg-primary/10 text-primary' : 'text-slate-600 hover:bg-slate-50'
                   }`
                 }
               >
                 <span>{link.icon}</span> {link.label}
               </NavLink>
             ))}
-            <NavLink
-              to="/focus"
-              onClick={() => setMenuOpen(false)}
-              className="btn-primary w-full text-center mt-2 block text-sm py-2.5"
-            >
-              🎯 Focus Now
-            </NavLink>
           </div>
         )}
       </div>

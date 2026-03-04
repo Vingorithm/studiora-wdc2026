@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import StatCard from '../components/StatCard'
+import { FaTasks } from "react-icons/fa";
+import { MdAccessTimeFilled } from "react-icons/md";
+import { BsFire } from "react-icons/bs";
+import { FaCircleCheck } from "react-icons/fa6";
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
@@ -153,18 +157,15 @@ export default function Dashboard() {
           <button onClick={() => navigate('/tasks')} className="btn-primary text-sm py-2.5 px-5">
             + New Task
           </button>
-          <button onClick={() => navigate('/focus')} className="btn-secondary text-sm py-2.5 px-5">
-            🎯 Focus
-          </button>
         </div>
       </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard title="Total Tasks" value={total} icon="📋" trend={12} color="primary" subtitle="This semester" />
-        <StatCard title="Focus Hours" value={`${sessions + 12}h`} icon="⏱" trend={8} color="secondary" subtitle="This week" />
-        <StatCard title="Study Streak" value={`${streak} days`} icon="🔥" trend={0} color="accent" subtitle="Keep it up!" />
-        <StatCard title="Completed" value={done} icon="✅" trend={15} color="success" subtitle={`of ${total} tasks`} />
+        <StatCard title="Total Tasks" value={total} icon=<FaTasks /> trend={12} color="primary" subtitle="This semester" />
+        <StatCard title="Focus Hours" value={`${sessions + 12}h`} icon=<MdAccessTimeFilled /> trend={8} color="secondary" subtitle="This week" />
+        <StatCard title="Study Streak" value={`${streak} days`} icon=<BsFire /> trend={0} color="accent" subtitle="Keep it up!" />
+        <StatCard title="Completed" value={done} icon=<FaCircleCheck /> trend={15} color="success" subtitle={`of ${total} tasks`} />
       </div>
 
       {/* Charts row */}
@@ -232,9 +233,8 @@ export default function Dashboard() {
             {weekDays.map(day => (
               <div key={day.label} className="flex flex-col items-center gap-1">
                 <span className="text-xs text-slate-400 font-inter font-medium">{day.label}</span>
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold font-poppins transition-all ${
-                  day.isToday ? 'bg-aurora text-white shadow-soft' : 'text-darkText hover:bg-primary/5'
-                }`}>
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold font-poppins transition-all ${day.isToday ? 'bg-aurora text-white shadow-soft' : 'text-darkText hover:bg-primary/5'
+                  }`}>
                   {day.date}
                 </div>
               </div>
@@ -263,13 +263,13 @@ export default function Dashboard() {
       <div className="mt-6 bg-aurora rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h3 className="font-bold font-poppins text-white text-lg">Ready to focus?</h3>
-          <p className="text-white/70 font-inter text-sm mt-1">Start a Pomodoro session and get into deep work mode.</p>
+          <p className="text-white/70 font-inter text-sm mt-1">Start a focus session and get into deep work mode.</p>
         </div>
         <button
           onClick={() => navigate('/focus')}
           className="bg-white text-primary font-bold font-poppins px-8 py-3 rounded-xl hover:shadow-glow hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0"
         >
-          🎯 Start Focus Session
+          Start Focus Session
         </button>
       </div>
     </div>

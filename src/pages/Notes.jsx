@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NoteViewModal from '../components/NoteViewModal'
+import { IoSearchSharp } from 'react-icons/io5'
 
 const STORAGE_KEY = 'studiora_notes'
 
@@ -153,16 +154,16 @@ function EmptyState({ onNew }) {
     <div className="flex flex-col items-center justify-center py-24 text-center animate-fade-in">
       <div className="w-32 h-32 rounded-3xl bg-aurora-soft flex items-center justify-center shadow-soft mb-8">
         <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-          <rect x="10" y="8" width="44" height="48" rx="6" fill="#EEF2FF" stroke="#C4B5FD" strokeWidth="2"/>
-          <rect x="18" y="18" width="28" height="3" rx="1.5" fill="#C4B5FD"/>
-          <rect x="18" y="25" width="20" height="2.5" rx="1.25" fill="#DDD6FE"/>
-          <rect x="18" y="31" width="24" height="2.5" rx="1.25" fill="#DDD6FE"/>
-          <rect x="18" y="37" width="16" height="2.5" rx="1.25" fill="#DDD6FE"/>
-          <circle cx="48" cy="48" r="10" fill="url(#eg)"/>
-          <path d="M44 48h8M48 44v8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+          <rect x="10" y="8" width="44" height="48" rx="6" fill="#EEF2FF" stroke="#C4B5FD" strokeWidth="2" />
+          <rect x="18" y="18" width="28" height="3" rx="1.5" fill="#C4B5FD" />
+          <rect x="18" y="25" width="20" height="2.5" rx="1.25" fill="#DDD6FE" />
+          <rect x="18" y="31" width="24" height="2.5" rx="1.25" fill="#DDD6FE" />
+          <rect x="18" y="37" width="16" height="2.5" rx="1.25" fill="#DDD6FE" />
+          <circle cx="48" cy="48" r="10" fill="url(#eg)" />
+          <path d="M44 48h8M48 44v8" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
           <defs>
             <linearGradient id="eg" x1="38" y1="38" x2="58" y2="58" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#5D8BF4"/><stop offset="1" stopColor="#C4B5FD"/>
+              <stop stopColor="#5D8BF4" /><stop offset="1" stopColor="#C4B5FD" />
             </linearGradient>
           </defs>
         </svg>
@@ -228,7 +229,7 @@ export default function Notes() {
           style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}
         >
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
           Create New Note
         </button>
@@ -237,7 +238,7 @@ export default function Notes() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"><IoSearchSharp /></span>
           <input className="input-field pl-9 w-full sm:w-72" placeholder="Search notes..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
         <select className="input-field sm:w-44" value={filterSubject} onChange={e => setFilterSubject(e.target.value)}>

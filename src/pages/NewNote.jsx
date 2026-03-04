@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import Toolbar from '../components/Toolbar'
 import TagInput from '../components/TagInput'
+import { LiaHashtagSolid } from "react-icons/lia";
 
 const STORAGE_KEY = 'studiora_notes'
 
@@ -152,7 +153,7 @@ export default function NewNote() {
 
         {/* Tags */}
         <div className="mb-8 flex items-start gap-2">
-          <span className="text-slate-300 font-inter text-sm mt-0.5 flex-shrink-0">🏷</span>
+          <span className="text-slate-300 font-inter text-sm mt-0.5 flex-shrink-0"><LiaHashtagSolid /></span>
           <TagInput tags={tags} onChange={setTags} />
         </div>
 

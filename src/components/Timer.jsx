@@ -63,13 +63,12 @@ export default function Timer({ onSessionComplete }) {
           <button
             key={m}
             onClick={() => switchMode(m)}
-            className={`px-6 py-2.5 rounded-xl text-sm font-semibold font-inter transition-all duration-300 capitalize ${
-              mode === m
+            className={`px-6 py-2.5 rounded-xl text-sm font-semibold font-inter transition-all duration-300 capitalize ${mode === m
                 ? 'bg-white text-primary shadow-soft'
                 : 'text-white/70 hover:text-white'
-            }`}
+              }`}
           >
-            {m === 'focus' ? '🎯 Focus' : '☕ Break'}
+            {m === 'focus' ? 'Focus' : 'Break'}
           </button>
         ))}
       </div>
@@ -117,11 +116,10 @@ export default function Timer({ onSessionComplete }) {
         </button>
         <button
           onClick={toggle}
-          className={`w-20 h-20 rounded-3xl flex items-center justify-center text-2xl font-bold transition-all duration-300 shadow-glow ${
-            isRunning
+          className={`w-20 h-20 rounded-3xl flex items-center justify-center text-2xl font-bold transition-all duration-300 shadow-glow ${isRunning
               ? 'bg-white text-primary hover:bg-white/90 scale-105'
               : 'bg-primary hover:bg-primary/90 text-white'
-          }`}
+            }`}
         >
           {isRunning ? '⏸' : '▶'}
         </button>
@@ -138,11 +136,10 @@ export default function Timer({ onSessionComplete }) {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i < sessions % 4
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${i < sessions % 4
                 ? 'bg-primary scale-110'
                 : 'bg-white/20'
-            }`}
+              }`}
           />
         ))}
         <span className="text-white/60 text-sm font-inter ml-2">

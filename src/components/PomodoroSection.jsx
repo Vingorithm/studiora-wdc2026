@@ -59,8 +59,8 @@ function TimerMockup({ pulse }) {
       >
         {/* Mode badge */}
         <div className="flex gap-2 bg-white/10 rounded-xl p-1">
-          <span className="px-4 py-1.5 rounded-lg bg-white text-primary text-xs font-bold font-inter shadow-sm">🎯 Focus</span>
-          <span className="px-4 py-1.5 rounded-lg text-white/50 text-xs font-semibold font-inter">☕ Break</span>
+          <span className="px-4 py-1.5 rounded-lg bg-white text-primary text-xs font-bold font-inter shadow-sm">Focus</span>
+          <span className="px-4 py-1.5 rounded-lg text-white/50 text-xs font-semibold font-inter">Break</span>
         </div>
 
         {/* SVG ring timer */}
@@ -224,7 +224,7 @@ export default function PomodoroSection() {
                 <span className="text-xl group-hover:animate-float inline-block">🎯</span>
                 Start Your First Focus Session
                 <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform duration-200">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </button>
               <p className="text-xs text-slate-400 font-inter mt-3 ml-1">No setup needed. Start focusing in seconds.</p>

@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { FaBook } from "react-icons/fa6";
+import { FaCalendarAlt } from "react-icons/fa";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const priorityStyles = {
   Low: 'bg-emerald-50 text-emerald-600',
@@ -35,11 +38,10 @@ export default function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <button
               onClick={() => onStatusChange(task.id, task.status === 'Done' ? 'To Do' : 'Done')}
-              className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 ${
-                task.status === 'Done'
-                  ? 'bg-success border-success text-white'
-                  : 'border-slate-300 hover:border-primary'
-              }`}
+              className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 ${task.status === 'Done'
+                ? 'bg-success border-success text-white'
+                : 'border-slate-300 hover:border-primary'
+                }`}
             >
               {task.status === 'Done' && <span className="text-xs">✓</span>}
             </button>
@@ -58,15 +60,15 @@ export default function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
               <div className="absolute right-0 top-8 bg-white rounded-xl shadow-lg border border-slate-100 py-1.5 z-10 min-w-[120px] animate-slide-up">
                 <button
                   onClick={() => { onEdit(task); setShowMenu(false) }}
-                  className="w-full text-left px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 font-inter"
+                  className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 font-inter"
                 >
-                  ✏️ Edit
+                  <MdEdit /> Edit
                 </button>
                 <button
                   onClick={() => { onDelete(task.id); setShowMenu(false) }}
-                  className="w-full text-left px-4 py-2 text-sm text-danger hover:bg-red-50 font-inter"
+                  className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm text-danger hover:bg-red-50 font-inter"
                 >
-                  🗑 Delete
+                  <MdDelete /> Delete
                 </button>
               </div>
             )}
@@ -80,7 +82,10 @@ export default function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
 
         {/* Subject */}
         {task.subject && (
-          <p className="text-xs text-primary font-semibold font-inter mb-2">📚 {task.subject}</p>
+          <div className="flex items-center text-primary gap-2 mb-3">
+            <FaBook />
+            <p className="text-xs font-semibold font-inter">{task.subject}</p>
+          </div>
         )}
 
         {/* Badges */}
@@ -96,14 +101,14 @@ export default function TaskCard({ task, onEdit, onDelete, onStatusChange }) {
         {/* Deadline */}
         {task.deadline && (
           <div className={`mt-3 flex items-center gap-1.5 text-xs font-inter font-medium ${isOverdue ? 'text-danger' : daysLeft <= 2 ? 'text-amber-500' : 'text-slate-400'}`}>
-            <span>📅</span>
+            <span><FaCalendarAlt /></span>
             {isOverdue
               ? `Overdue by ${Math.abs(daysLeft)} day${Math.abs(daysLeft) !== 1 ? 's' : ''}`
               : daysLeft === 0
-              ? 'Due today'
-              : daysLeft === 1
-              ? 'Due tomorrow'
-              : `Due in ${daysLeft} days`
+                ? 'Due today'
+                : daysLeft === 1
+                  ? 'Due tomorrow'
+                  : `Due in ${daysLeft} days`
             }
           </div>
         )}
