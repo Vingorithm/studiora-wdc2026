@@ -1,37 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import PomodoroSection from '../components/PomodoroSection'
+import { ContainerScroll } from '../components/ContainerScrollAnimation'
+import { TbLayoutDashboardFilled } from "react-icons/tb";
+import { FaTasks } from "react-icons/fa";
+import { LuNotebook } from "react-icons/lu";
+import { RiFocus3Line } from "react-icons/ri";
+
+/* ─── Data ─────────────────────────────────────────────────────────── */
 
 const features = [
-  {
-    icon: '✅',
-    title: 'Smart Task Manager',
-    desc: 'Create, prioritize, and track tasks with deadlines. Visual urgency indicators keep you ahead of every deadline.',
-    color: 'from-blue-400 to-primary',
-  },
-  {
-    icon: '📅',
-    title: 'Study Planner',
-    desc: 'Weekly calendar view with time-blocking UI. Visualize your study sessions and stay organized all week.',
-    color: 'from-secondary to-purple-400',
-  },
-  {
-    icon: '📝',
-    title: 'Smart Notes',
-    desc: 'Organize notes by subject with tags, highlights, and checklists. Never lose an important idea again.',
-    color: 'from-accent to-orange-400',
-  },
-  {
-    icon: '🎯',
-    title: 'Focus Mode',
-    desc: 'Distraction-free Pomodoro timer. 25 minutes of deep focus followed by rejuvenating breaks.',
-    color: 'from-emerald-400 to-teal-500',
-  },
-  {
-    icon: '📊',
-    title: 'Progress Analytics',
-    desc: 'Track study hours, completed tasks, and productivity streaks. See your growth in beautiful charts.',
-    color: 'from-rose-400 to-pink-500',
-  },
+  { icon: '✅', title: 'Smart Task Manager', desc: 'Create, prioritize, and track tasks with deadlines. Visual urgency indicators keep you ahead of every deadline.', color: 'from-blue-400 to-primary' },
+  { icon: '📅', title: 'Study Planner', desc: 'Weekly calendar view with time-blocking UI. Visualize your study sessions and stay organized all week.', color: 'from-secondary to-purple-400' },
+  { icon: '📝', title: 'Smart Notes', desc: 'Organize notes by subject with tags, highlights, and checklists. Never lose an important idea again.', color: 'from-accent to-orange-400' },
+  { icon: '🎯', title: 'Focus Mode', desc: 'Distraction-free Pomodoro timer. 25 minutes of deep focus followed by rejuvenating breaks.', color: 'from-emerald-400 to-teal-500' },
+  { icon: '📊', title: 'Progress Analytics', desc: 'Track study hours, completed tasks, and productivity streaks. See your growth in beautiful charts.', color: 'from-rose-400 to-pink-500' },
 ]
 
 const testimonials = [
@@ -40,124 +22,255 @@ const testimonials = [
   { name: 'Priya R.', major: 'Business', text: "The weekly planner lets me see exactly when I'm studying and where I need to improve.", avatar: '👩‍💼' },
 ]
 
-function HeroDashboardMockup() {
+/* ─── Dashboard Mockup (rendered inside the 3-D card) ──────────────── */
+
+function DashboardMockup() {
+  const tasks = [
+    { title: 'Calculus Problem Set', priority: 'High', done: false, dot: '#F87171' },
+    { title: 'Physics Lab Report', priority: 'Medium', done: false, dot: '#FDBA74' },
+    { title: 'Literature Essay Draft', priority: 'Medium', done: false, dot: '#FDBA74' },
+    { title: 'Read Chapter 7–9', priority: 'Low', done: true, dot: '#22C55E' },
+  ]
+
+  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+  const bars = [4, 6, 5, 8, 7, 9, 6]
+
   return (
-    <div className="relative w-full max-w-lg mx-auto lg:mx-0 animate-float" style={{ animationDelay: '0.5s' }}>
-      {/* Glow halo behind card stack */}
-      <div className="absolute inset-0 rounded-3xl blur-3xl opacity-30"
-        style={{ background: 'radial-gradient(ellipse at 60% 40%, #5D8BF4 0%, #C4B5FD 60%, transparent 100%)', transform: 'scale(1.15)' }} />
+    <div className="w-full h-full" style={{ background: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>
+      {/* Window chrome */}
+      <div className="flex items-center gap-2 px-5 py-3" style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-white/40" />
+          <div className="w-3 h-3 rounded-full bg-white/40" />
+          <div className="w-3 h-3 rounded-full bg-white/40" />
+        </div>
+        <div className="flex-1 text-center text-white/80 text-xs font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+          studiora.app/dashboard
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-300" />
+          <span className="text-white/70 text-xs">Live</span>
+        </div>
+      </div>
 
-      {/* Back card – depth layer */}
-      <div className="absolute top-6 left-6 right-0 bottom-0 rounded-3xl"
-        style={{ background: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 8px 32px rgba(93,139,244,0.12)' }} />
+      {/* App layout */}
+      <div className="flex" style={{ minHeight: 520 }}>
 
-      {/* Mid card */}
-      <div className="absolute top-3 left-3 right-2 bottom-1 rounded-3xl"
-        style={{ background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: '0 12px 40px rgba(93,139,244,0.14)' }} />
-
-      {/* Main card */}
-      <div className="relative rounded-3xl overflow-hidden"
-        style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 24px 64px rgba(93,139,244,0.18), 0 0 0 1px rgba(93,139,244,0.08)' }}>
-
-        {/* Card header */}
-        <div className="px-5 pt-5 pb-4 flex items-center justify-between border-b border-slate-100/80">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-bold font-poppins"
+        {/* Sidebar */}
+        <div className="hidden md:flex flex-col gap-1 p-4 border-r border-slate-100" style={{ width: 180, background: '#fff', flexShrink: 0 }}>
+          <div className="flex items-center gap-2 mb-5 px-1">
+            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-bold"
               style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>S</div>
-            <span className="text-sm font-bold font-poppins text-darkText">Studiora</span>
+            <span className="text-sm font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#1E293B' }}>Studiora</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-success animate-pulse-slow" />
-            <span className="text-xs text-slate-400 font-inter">Live</span>
-          </div>
+          {[
+            { icon: <TbLayoutDashboardFilled />, label: 'Dashboard', active: true },
+            { icon: <FaTasks />, label: 'Tasks' },
+            { icon: <LuNotebook />, label: 'Notes' },
+            { icon: <RiFocus3Line />, label: 'Focus' },
+          ].map(item => (
+            <div key={item.label}
+              className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-colors"
+              style={{
+                background: item.active ? 'rgba(93,139,244,0.10)' : 'transparent',
+                color: item.active ? '#5D8BF4' : '#94A3B8',
+              }}>
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </div>
+          ))}
         </div>
 
-        <div className="p-5 space-y-4">
-          {/* Stat row */}
-          <div className="grid grid-cols-3 gap-2.5">
+        {/* Main content */}
+        <div className="flex-1 p-5 overflow-hidden">
+
+          {/* Greeting + date */}
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <h2 className="text-base font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#1E293B' }}>Good morning! </h2>
+              <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>
+                {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-white"
+              style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)', fontFamily: 'Inter, sans-serif' }}>
+              + New Task
+            </div>
+          </div>
+
+          {/* Stat cards */}
+          <div className="grid grid-cols-4 gap-3 mb-5">
             {[
-              { val: '12', label: 'Tasks', color: '#5D8BF4', bg: '#EEF2FF' },
-              { val: '7🔥', label: 'Streak', color: '#F97316', bg: '#FFF7ED' },
-              { val: '4.5h', label: 'Focus', color: '#7C3AED', bg: '#F5F3FF' },
+              { icon: '📋', val: '24', label: 'Total Tasks', color: '#5D8BF4', bg: '#EEF2FF' },
+              { icon: '⏱', val: '12h', label: 'Focus Hours', color: '#7C3AED', bg: '#F5F3FF' },
+              { icon: '🔥', val: '7', label: 'Day Streak', color: '#F97316', bg: '#FFF7ED' },
+              { icon: '✅', val: '5', label: 'Done Today', color: '#22C55E', bg: '#F0FDF4' },
             ].map(s => (
-              <div key={s.label} className="rounded-xl px-3 py-2.5 text-center" style={{ background: s.bg }}>
-                <p className="text-base font-extrabold font-poppins" style={{ color: s.color }}>{s.val}</p>
-                <p className="text-xs text-slate-400 font-inter mt-0.5">{s.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Task items */}
-          <div className="space-y-2">
-            {[
-              { title: 'Calculus Problem Set', priority: 'High', done: false, color: '#F87171' },
-              { title: 'Physics Lab Report', priority: 'Medium', done: false, color: '#FDBA74' },
-              { title: 'Read Chapter 7–9', priority: 'Low', done: true, color: '#22C55E' },
-            ].map((task, i) => (
-              <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50/80">
-                <div className="w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors"
-                  style={{ borderColor: task.color, background: task.done ? task.color : 'transparent' }}>
-                  {task.done && <span style={{ fontSize: '8px', color: 'white' }}>✓</span>}
+              <div key={s.label} className="rounded-2xl p-3.5" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(30,41,59,0.06)', border: '1px solid #F1F5F9' }}>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base mb-2" style={{ background: s.bg }}>
+                  {s.icon}
                 </div>
-                <span className={`text-xs font-inter flex-1 ${task.done ? 'line-through text-slate-400' : 'text-slate-600'}`}>{task.title}</span>
-                <span className="text-xs font-semibold font-inter px-2 py-0.5 rounded-lg"
-                  style={{ background: task.color + '18', color: task.color }}>{task.priority}</span>
+                <p className="text-xl font-extrabold" style={{ fontFamily: 'Poppins, sans-serif', color: s.color }}>{s.val}</p>
+                <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{s.label}</p>
               </div>
             ))}
           </div>
 
-          {/* Mini focus timer strip */}
-          <div className="rounded-2xl p-3.5 flex items-center gap-4"
-            style={{ background: 'linear-gradient(135deg, #1e1b4b, #1e3a5f)' }}>
-            <div className="relative w-10 h-10 flex-shrink-0">
-              <svg width="40" height="40" viewBox="0 0 40 40">
-                <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3.5" />
-                <circle cx="20" cy="20" r="16" fill="none" stroke="#5D8BF4" strokeWidth="3.5"
-                  strokeLinecap="round" strokeDasharray={`${2 * Math.PI * 16}`}
-                  strokeDashoffset={`${2 * Math.PI * 16 * 0.38}`} transform="rotate(-90 20 20)" />
-              </svg>
-              <span className="absolute inset-0 flex items-center justify-center text-white font-bold font-poppins" style={{ fontSize: '9px' }}>🎯</span>
+          {/* Two-column: tasks + chart */}
+          <div className="grid grid-cols-5 gap-4">
+
+            {/* Tasks */}
+            <div className="col-span-3 rounded-2xl p-4" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(30,41,59,0.06)', border: '1px solid #F1F5F9' }}>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#1E293B' }}>Today's Tasks</p>
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-lg" style={{ background: '#EEF2FF', color: '#5D8BF4' }}>4 active</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {tasks.map((task, i) => (
+                  <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl" style={{ background: '#F8FAFC' }}>
+                    <div className="w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center"
+                      style={{ borderColor: task.dot, background: task.done ? task.dot : 'transparent' }}>
+                      {task.done && <span style={{ fontSize: 8, color: '#fff', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span className="flex-1 text-xs font-medium" style={{ color: task.done ? '#94A3B8' : '#1E293B', textDecoration: task.done ? 'line-through' : 'none' }}>
+                      {task.title}
+                    </span>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-lg"
+                      style={{ background: task.dot + '18', color: task.dot }}>
+                      {task.priority}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-xs font-semibold font-inter">Focus Session</p>
-              <p className="text-white/50 text-xs font-inter mt-0.5">15:32 remaining</p>
+
+            {/* Chart + timer */}
+            <div className="col-span-2 flex flex-col gap-3">
+              {/* Mini bar chart */}
+              <div className="rounded-2xl p-4 flex-1" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(30,41,59,0.06)', border: '1px solid #F1F5F9' }}>
+                <p className="text-xs font-semibold mb-3" style={{ color: '#64748B' }}>Weekly Study Hours</p>
+                <div className="flex items-end gap-1.5" style={{ height: 56 }}>
+                  {bars.map((h, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                      <div className="w-full rounded-t-md" style={{
+                        height: `${(h / 9) * 100}%`,
+                        background: i === 5 ? 'linear-gradient(to top, #5D8BF4, #C4B5FD)' : 'linear-gradient(to top, #5D8BF4CC, #C4B5FDCC)',
+                        opacity: i === 5 ? 1 : 0.6,
+                      }} />
+                      <span className="text-xs" style={{ color: '#CBD5E1', fontSize: 9 }}>{days[i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pomodoro strip */}
+              <div className="rounded-2xl p-3.5 flex items-center gap-3" style={{ background: 'linear-gradient(135deg, #1e1b4b, #1e3a5f)' }}>
+                <div style={{ position: 'relative', width: 36, height: 36, flexShrink: 0 }}>
+                  <svg width="36" height="36" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                    <circle cx="18" cy="18" r="14" fill="none" stroke="#5D8BF4" strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray={`${2 * Math.PI * 14}`}
+                      strokeDashoffset={`${2 * Math.PI * 14 * 0.38}`}
+                      transform="rotate(-90 18 18)" />
+                  </svg>
+                  <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>🎯</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold" style={{ color: '#fff' }}>Focus Session</p>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 10, marginTop: 2 }}>15:32 remaining</p>
+                </div>
+                <div className="w-7 h-7 rounded-xl flex items-center justify-center text-sm"
+                  style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>⏸</div>
+              </div>
             </div>
-            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-sm"
-              style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>⏸</div>
           </div>
 
           {/* Progress bar */}
-          <div>
-            <div className="flex justify-between text-xs font-inter text-slate-400 mb-1.5">
-              <span>Daily Goal</span><span>72% complete</span>
+          <div className="mt-4 rounded-2xl p-4" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(30,41,59,0.06)', border: '1px solid #F1F5F9' }}>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs font-semibold" style={{ color: '#64748B' }}>Daily Goal Progress</span>
+              <span className="text-xs font-bold" style={{ color: '#5D8BF4' }}>72%</span>
             </div>
-            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-2 rounded-full" style={{ background: '#F1F5F9', overflow: 'hidden' }}>
               <div className="h-full rounded-full" style={{ width: '72%', background: 'linear-gradient(90deg, #5D8BF4, #C4B5FD)' }} />
             </div>
           </div>
         </div>
       </div>
+    </div>
+  )
+}
 
-      {/* Floating badge – top right */}
-      <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-soft border border-slate-100 px-3.5 py-2.5 flex items-center gap-2 animate-float" style={{ animationDelay: '1s' }}>
-        <span className="text-lg">⭐</span>
-        <div>
-          <p className="text-xs font-bold font-poppins text-darkText leading-none">4.9 Rating</p>
-          <p className="text-xs text-slate-400 font-inter">10K+ students</p>
-        </div>
+/* ─── Hero Title (passed into ContainerScroll) ─────────────────────── */
+
+function HeroTitle({ navigate }) {
+  return (
+    <div className="flex flex-col items-center gap-8">
+
+      {/* Live badge */}
+      <div className="inline-flex items-center gap-2.5 bg-white/80 backdrop-blur-sm rounded-full px-5 py-2.5 border border-primary/12 animate-fade-in"
+        style={{ boxShadow: '0 4px 20px rgba(93,139,244,0.10)' }}>
+        <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-slow flex-shrink-0" />
+        <span className="text-sm font-semibold text-slate-600 font-inter">Designed for University Students</span>
       </div>
 
-      {/* Floating badge – bottom left */}
-      <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-soft border border-slate-100 px-3.5 py-2.5 flex items-center gap-2 animate-float" style={{ animationDelay: '2.5s' }}>
-        <span className="text-lg">✅</span>
-        <div>
-          <p className="text-xs font-bold font-poppins text-darkText leading-none">500K+ Tasks</p>
-          <p className="text-xs text-slate-400 font-inter">Completed this month</p>
-        </div>
+      {/* Headline */}
+      <div className="animate-slide-up">
+        <h1 className="font-poppins font-extrabold text-center leading-[1.06] tracking-tight"
+          style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          <span style={{
+            background: 'linear-gradient(135deg, #5D8BF4, #818CF8)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            display: 'inline',
+          }}>Organize</span>
+          <span className="text-darkText"> Your Study.</span>
+          <br />
+          <span className="text-darkText">Illuminate </span>
+          <span style={{
+            background: 'linear-gradient(135deg, #C4B5FD, #A78BFA)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            display: 'inline',
+          }}>Your Future.</span>
+        </h1>
+      </div>
+
+      {/* Sub-headline */}
+      <p className="font-inter text-slate-500 text-center max-w-2xl leading-relaxed animate-slide-up"
+        style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', animationDelay: '0.1s' }}>
+        Studiora transforms your chaotic academic life into a{' '}
+        <strong className="text-darkText font-semibold">structured</strong>,{' '}
+        <strong className="text-darkText font-semibold">focused</strong>, and{' '}
+        <strong className="text-darkText font-semibold">inspiring</strong>{' '}
+        study journey — all in one elegant dashboard.
+      </p>
+
+      {/* CTAs */}
+      <div className="flex flex-col sm:flex-row gap-3 items-center justify-center animate-slide-up" style={{ animationDelay: '0.18s' }}>
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="inline-flex items-center justify-center gap-2.5 font-bold font-poppins text-base text-white px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-300"
+          style={{ background: 'linear-gradient(135deg, #5D8BF4 0%, #C4B5FD 100%)', boxShadow: '0 8px 32px rgba(93,139,244,0.35)' }}
+        >
+          Start Organizing
+        </button>
+        <button
+          onClick={() => navigate('/focus')}
+          className="inline-flex items-center justify-center gap-2 font-semibold font-inter text-base text-slate-600 bg-white/70 backdrop-blur-sm border border-slate-200 px-8 py-4 rounded-full hover:bg-white hover:border-primary/30 hover:text-primary transition-all duration-300"
+          style={{ boxShadow: '0 2px 12px rgba(30,41,59,0.06)' }}
+        >
+          Try Focus Mode
+        </button>
       </div>
     </div>
   )
 }
+
+/* ─── Page ──────────────────────────────────────────────────────────── */
 
 export default function Home() {
   const navigate = useNavigate()
@@ -165,140 +278,36 @@ export default function Home() {
   return (
     <div className="min-h-screen">
 
-      {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      {/* ── HERO with Scroll Animation ─── */}
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #EEF2FF 0%, #F8FAFC 35%, #F5F3FF 70%, #FFF7ED 100%)' }}>
 
-        {/* Background gradient base */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(145deg, #EEF2FF 0%, #F8FAFC 35%, #F5F3FF 70%, #FFF7ED 100%)'
-        }} />
-
-        {/* Radial glow center */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 80% 60% at 65% 50%, rgba(93,139,244,0.10) 0%, rgba(196,181,253,0.08) 50%, transparent 100%)'
-        }} />
-
-        {/* Floating blobs */}
-        <div className="absolute -top-24 -left-24 w-[480px] h-[480px] rounded-full blur-3xl opacity-40 animate-float pointer-events-none"
+        {/* Ambient blobs */}
+        <div className="absolute -top-32 -left-32 w-[560px] h-[560px] rounded-full blur-3xl opacity-40 pointer-events-none animate-float"
           style={{ background: 'radial-gradient(circle, rgba(93,139,244,0.22), transparent 70%)' }} />
-        <div className="absolute top-1/3 -right-32 w-[520px] h-[520px] rounded-full blur-3xl opacity-35 animate-float pointer-events-none"
+        <div className="absolute top-1/4 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-30 pointer-events-none animate-float"
           style={{ background: 'radial-gradient(circle, rgba(196,181,253,0.28), transparent 70%)', animationDelay: '2.5s' }} />
-        <div className="absolute -bottom-20 left-1/3 w-[360px] h-[360px] rounded-full blur-3xl opacity-30 animate-float pointer-events-none"
+        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] rounded-full blur-3xl opacity-25 pointer-events-none animate-float"
           style={{ background: 'radial-gradient(circle, rgba(253,186,116,0.20), transparent 70%)', animationDelay: '4s' }} />
 
-        {/* Grid texture overlay – very subtle */}
+        {/* Dot grid */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: 'radial-gradient(rgba(93,139,244,0.06) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(93,139,244,0.055) 1px, transparent 1px)',
           backgroundSize: '32px 32px',
         }} />
 
-        {/* Content */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-0 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <ContainerScroll
+          className="relative z-10"
+          titleComponent={<HeroTitle navigate={navigate} />}
+        >
+          <DashboardMockup />
+        </ContainerScroll>
 
-            {/* ── LEFT: Text ── */}
-            <div className="flex flex-col gap-8 text-center lg:text-left">
-
-              {/* Badge */}
-              <div className="flex justify-center lg:justify-start animate-fade-in">
-                <div className="inline-flex items-center gap-2.5 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-card border border-primary/12">
-                  <span className="w-2 h-2 rounded-full bg-success animate-pulse-slow flex-shrink-0" />
-                  <span className="text-sm font-semibold text-slate-600 font-inter">Designed for university students</span>
-                </div>
-              </div>
-
-              {/* Headline */}
-              <div className="animate-slide-up">
-                <h1 className="text-5xl sm:text-6xl lg:text-[64px] font-extrabold font-poppins text-darkText leading-[1.08] tracking-tight">
-                  <span className="block">
-                    <span style={{
-                      background: 'linear-gradient(135deg, #5D8BF4, #818CF8)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}>Organize</span>{' '}
-                    <span className="text-darkText">Your Study.</span>
-                  </span>
-                  <span className="block mt-2">
-                    <span className="text-darkText">Illuminate </span>
-                    <span style={{
-                      background: 'linear-gradient(135deg, #C4B5FD, #E879F9)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                    }}>Your Future.</span>
-                  </span>
-                </h1>
-              </div>
-
-              {/* Sub-headline */}
-              <p className="text-lg text-slate-500 font-inter leading-relaxed max-w-xl mx-auto lg:mx-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                Studiora transforms your chaotic academic life into a{' '}
-                <span className="text-darkText font-semibold">structured</span>,{' '}
-                <span className="text-darkText font-semibold">focused</span>, and{' '}
-                <span className="text-darkText font-semibold">inspiring</span>{' '}
-                study journey — all in one elegant dashboard.
-              </p>
-
-              {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start animate-slide-up" style={{ animationDelay: '0.18s' }}>
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="inline-flex items-center justify-center gap-2.5 font-bold font-poppins text-base text-white px-8 py-4 rounded-full shadow-glow hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
-                  style={{ background: 'linear-gradient(135deg, #5D8BF4 0%, #C4B5FD 100%)' }}
-                >
-                  <span>🚀</span> Start Organizing
-                </button>
-                <button
-                  onClick={() => {
-                    const el = document.getElementById('features')
-                    el ? el.scrollIntoView({ behavior: 'smooth' }) : navigate('/dashboard')
-                  }}
-                  className="inline-flex items-center justify-center gap-2 font-semibold font-inter text-base text-slate-600 bg-white/70 backdrop-blur-sm border border-slate-200 px-8 py-4 rounded-full hover:bg-white hover:border-primary/30 hover:text-primary transition-all duration-300 shadow-card"
-                >
-                  Explore Features
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Social proof avatars + stat */}
-              <div className="flex items-center gap-4 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: '0.28s' }}>
-                <div className="flex -space-x-2.5">
-                  {['👩‍💻', '👨‍⚕️', '👩‍💼', '👨‍🎓', '👩‍🔬'].map((a, i) => (
-                    <div key={i} className="w-9 h-9 rounded-full bg-white border-2 border-white shadow-card flex items-center justify-center text-base"
-                      style={{ zIndex: 5 - i }}>
-                      {a}
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1 mb-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#FDBA74">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-xs text-slate-500 font-inter"><span className="font-semibold text-darkText">10,000+</span> students trust Studiora</p>
-                </div>
-              </div>
-            </div>
-
-            {/* ── RIGHT: Dashboard Mockup ── */}
-            <div className="flex justify-center lg:justify-end animate-fade-in" style={{ animationDelay: '0.22s' }}>
-              <HeroDashboardMockup />
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom fade into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+        {/* Fade into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, transparent, #F8FAFC)' }} />
       </section>
 
-      {/* Stats strip */}
+      {/* ── Stats strip ─── */}
       <section className="bg-white border-y border-slate-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0 sm:divide-x divide-slate-100">
@@ -309,10 +318,12 @@ export default function Home() {
               { value: '4.9★', label: 'Average Rating' },
             ].map(stat => (
               <div key={stat.label} className="text-center sm:px-8">
-                <p className="text-3xl font-extrabold font-poppins"
-                  style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  {stat.value}
-                </p>
+                <p className="text-3xl font-extrabold font-poppins" style={{
+                  background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}>{stat.value}</p>
                 <p className="text-sm text-slate-400 font-inter mt-1">{stat.label}</p>
               </div>
             ))}
@@ -320,68 +331,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mock Dashboard Preview */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="section-title mb-3">Your Productivity Command Center</h2>
-          <p className="text-slate-500 font-inter">Everything you need, elegantly organized.</p>
-        </div>
-
-        <div className="card p-0 overflow-hidden shadow-glow">
-          <div className="bg-aurora p-4 flex items-center gap-3">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-white/40" />
-              <div className="w-3 h-3 rounded-full bg-white/40" />
-              <div className="w-3 h-3 rounded-full bg-white/40" />
-            </div>
-            <div className="flex-1 text-center text-white/80 text-sm font-inter">studiora.app/dashboard</div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-0 bg-slate-50">
-            <div className="bg-white border-r border-slate-100 p-4 hidden md:block">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="w-7 h-7 rounded-lg bg-aurora flex items-center justify-center text-white text-sm font-bold">S</div>
-                <span className="font-bold text-sm font-poppins text-darkText">Studiora</span>
-              </div>
-              {['Dashboard', 'Tasks', 'Notes', 'Focus', 'Analytics'].map((item, i) => (
-                <div key={item} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl mb-1 text-xs font-inter font-medium ${i === 0 ? 'bg-primary/10 text-primary' : 'text-slate-400'}`}>
-                  <span>{['⬡', '✓', '📝', '🎯', '📊'][i]}</span> {item}
-                </div>
-              ))}
-            </div>
-
-            <div className="col-span-3 p-6">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-                {[
-                  { label: 'Total Tasks', value: '24', color: 'text-primary' },
-                  { label: 'Focus Hours', value: '12h', color: 'text-purple-500' },
-                  { label: 'Streak', value: '7🔥', color: 'text-amber-500' },
-                  { label: 'Done Today', value: '5', color: 'text-emerald-500' },
-                ].map(s => (
-                  <div key={s.label} className="bg-white rounded-xl p-3 shadow-card">
-                    <div className={`text-xl font-bold font-poppins ${s.color}`}>{s.value}</div>
-                    <div className="text-xs text-slate-400 font-inter mt-1">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="bg-white rounded-xl p-4 shadow-card">
-                <p className="text-xs font-semibold font-inter text-slate-500 mb-3">Weekly Study Hours</p>
-                <div className="flex items-end gap-2 h-16">
-                  {[4, 6, 5, 8, 7, 9, 6].map((h, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <div className="w-full rounded-t-md bg-gradient-to-t from-primary to-secondary opacity-80"
-                        style={{ height: `${(h / 9) * 100}%` }} />
-                      <span className="text-xs text-slate-300 font-inter">{['M','T','W','T','F','S','S'][i]}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
+      {/* ── Features ─── */}
       <section id="features" className="py-20 bg-aurora-soft">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -402,10 +352,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pomodoro Section */}
+      {/* ── Pomodoro Section ─── */}
       <PomodoroSection />
 
-      {/* Testimonials */}
+      {/* ── Testimonials ─── */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <h2 className="section-title mb-3">Loved by Students Worldwide</h2>
@@ -427,7 +377,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Banner */}
+      {/* ── CTA Banner ─── */}
       <section className="py-20 bg-aurora">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-extrabold font-poppins text-white mb-4">
@@ -445,7 +395,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ── Footer ─── */}
       <footer className="bg-darkText text-white py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">

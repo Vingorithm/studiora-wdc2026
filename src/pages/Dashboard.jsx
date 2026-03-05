@@ -150,8 +150,8 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="section-title mb-1">Good morning! 👋</h1>
-          <p className="text-slate-500 font-inter text-sm">Here's your productivity overview for today.</p>
+          <h1 className="section-title mb-1">Good morning! </h1>
+          <p className="text-slate-500 font-inter text-sm">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
         </div>
         <div className="flex gap-3">
           <button onClick={() => navigate('/tasks')} className="btn-primary text-sm py-2.5 px-5">
