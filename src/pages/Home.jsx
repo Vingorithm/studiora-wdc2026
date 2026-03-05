@@ -5,23 +5,32 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { FaTasks } from "react-icons/fa";
 import { LuNotebook } from "react-icons/lu";
 import { RiFocus3Line } from "react-icons/ri";
+import { FaCircleCheck } from "react-icons/fa6";
+import { FaCalendarAlt, FaClipboard } from "react-icons/fa";
+import { IoBarChart } from "react-icons/io5";
+import { MdAccessTimeFilled } from "react-icons/md";
+import { BsFire } from 'react-icons/bs';
+
 
 import logo from "/icon.png";
+import marcus from "/Marcus.jpg";
+import priya from "/Priya.png";
+import sarah from "/Sarah.jpg";
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 
 const features = [
-  { icon: '✅', title: 'Smart Task Manager', desc: 'Create, prioritize, and track tasks with deadlines. Visual urgency indicators keep you ahead of every deadline.', color: 'from-blue-400 to-primary' },
-  { icon: '📅', title: 'Study Planner', desc: 'Weekly calendar view with time-blocking UI. Visualize your study sessions and stay organized all week.', color: 'from-secondary to-purple-400' },
-  { icon: '📝', title: 'Smart Notes', desc: 'Organize notes by subject with tags, highlights, and checklists. Never lose an important idea again.', color: 'from-accent to-orange-400' },
-  { icon: '🎯', title: 'Focus Mode', desc: 'Distraction-free Pomodoro timer. 25 minutes of deep focus followed by rejuvenating breaks.', color: 'from-emerald-400 to-teal-500' },
-  { icon: '📊', title: 'Progress Analytics', desc: 'Track study hours, completed tasks, and productivity streaks. See your growth in beautiful charts.', color: 'from-rose-400 to-pink-500' },
+  { icon: <FaCircleCheck />, title: 'Smart Task Manager', desc: 'Create, prioritize, and track tasks with deadlines. Visual urgency indicators keep you ahead of every deadline.', color: 'text-blue-900 from-blue-400 to-primary' },
+  { icon: <FaCalendarAlt />, title: 'Study Planner', desc: 'Weekly calendar view with time-blocking UI. Visualize your study sessions and stay organized all week.', color: 'text-purple-900 from-secondary to-purple-400' },
+  { icon: <FaClipboard />, title: 'Smart Notes', desc: 'Organize notes by subject with tags, highlights, and checklists. Never lose an important idea again.', color: 'text-orange-900 from-accent to-orange-400' },
+  { icon: <RiFocus3Line />, title: 'Focus Mode', desc: 'Distraction-free Pomodoro timer. 25 minutes of deep focus followed by rejuvenating breaks.', color: 'text-teal-900 from-emerald-400 to-teal-500' },
+  { icon: <IoBarChart />, title: 'Progress Analytics', desc: 'Track study hours, completed tasks, and productivity streaks. See your growth in beautiful charts.', color: 'text-pink-900 from-rose-400 to-pink-500' },
 ]
 
 const testimonials = [
-  { name: 'Sarah K.', major: 'Computer Science', text: 'Studiora helped me go from overwhelmed to organized in one week. My GPA improved this semester!', avatar: '👩‍💻' },
-  { name: 'Marcus L.', major: 'Medicine', text: 'The focus timer is a game-changer. I can finally study for 3 hours without checking my phone.', avatar: '👨‍⚕️' },
-  { name: 'Priya R.', major: 'Business', text: "The weekly planner lets me see exactly when I'm studying and where I need to improve.", avatar: '👩‍💼' },
+  { name: 'Sarah K.', major: 'Computer Science', text: 'Studiora helped me go from overwhelmed to organized in one week. My GPA improved this semester!', avatar: sarah },
+  { name: 'Marcus L.', major: 'Medicine', text: 'The focus timer is a game-changer. I can finally study for 3 hours without checking my phone.', avatar: marcus },
+  { name: 'Priya R.', major: 'Business', text: "The weekly planner lets me see exactly when I'm studying and where I need to improve.", avatar: priya },
 ]
 
 /* ─── Dashboard Mockup (rendered inside the 3-D card) ──────────────── */
@@ -61,8 +70,12 @@ function DashboardMockup() {
         {/* Sidebar */}
         <div className="hidden md:flex flex-col gap-1 p-4 border-r border-slate-100" style={{ width: 180, background: '#fff', flexShrink: 0 }}>
           <div className="flex items-center gap-2 mb-5 px-1">
-            <div className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-bold"
-              style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>S</div>
+            {logo ?
+              <img className="w-8 h-8 rounded-xl flex items-center justify-center shadow-soft group-hover:shadow-glow transition-shadow duration-300" src={logo} alt="studiora-logo" /> :
+              <div className="w-7 h-7 rounded-xl flex items-center justify-center text-white text-xs font-bold"
+                style={{ background: 'linear-gradient(135deg, #5D8BF4, #C4B5FD)' }}>
+                S
+              </div>}
             <span className="text-sm font-bold" style={{ fontFamily: 'Poppins, sans-serif', color: '#1E293B' }}>Studiora</span>
           </div>
           {[
@@ -103,13 +116,13 @@ function DashboardMockup() {
           {/* Stat cards */}
           <div className="grid grid-cols-4 gap-3 mb-5">
             {[
-              { icon: '📋', val: '24', label: 'Total Tasks', color: '#5D8BF4', bg: '#EEF2FF' },
-              { icon: '⏱', val: '12h', label: 'Focus Hours', color: '#7C3AED', bg: '#F5F3FF' },
-              { icon: '🔥', val: '7', label: 'Day Streak', color: '#F97316', bg: '#FFF7ED' },
-              { icon: '✅', val: '5', label: 'Done Today', color: '#22C55E', bg: '#F0FDF4' },
+              { icon: <LuNotebook />, val: '24', label: 'Total Tasks', color: '#5D8BF4', bg: '#EEF2FF' },
+              { icon: <MdAccessTimeFilled />, val: '12h', label: 'Focus Hours', color: '#7C3AED', bg: '#F5F3FF' },
+              { icon: <BsFire />, val: '7', label: 'Day Streak', color: '#F97316', bg: '#FFF7ED' },
+              { icon: <FaCircleCheck />, val: '5', label: 'Done Today', color: '#22C55E', bg: '#F0FDF4' },
             ].map(s => (
               <div key={s.label} className="rounded-2xl p-3.5" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(30,41,59,0.06)', border: '1px solid #F1F5F9' }}>
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base mb-2" style={{ background: s.bg }}>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base mb-2" style={{ background: s.bg, color: s.color }}>
                   {s.icon}
                 </div>
                 <p className="text-xl font-extrabold" style={{ fontFamily: 'Poppins, sans-serif', color: s.color }}>{s.val}</p>
@@ -176,7 +189,7 @@ function DashboardMockup() {
                       strokeDashoffset={`${2 * Math.PI * 14 * 0.38}`}
                       transform="rotate(-90 18 18)" />
                   </svg>
-                  <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>🎯</span>
+                  <span className="bg-white text-red-500 rounded-full" style={{ position: 'absolute', inset: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><RiFocus3Line /></span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold" style={{ color: '#fff' }}>Focus Session</p>
@@ -368,7 +381,9 @@ export default function Home() {
             <div key={t.name} className="card card-hover animate-slide-up" style={{ animationDelay: `${i * 0.1}s` }}>
               <p className="text-sm text-slate-600 font-inter italic leading-relaxed mb-4">"{t.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-aurora-soft flex items-center justify-center text-2xl">{t.avatar}</div>
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <img className="rounded-2xl" src={t.avatar} alt={t.name} />
+                </div>
                 <div>
                   <p className="font-semibold font-poppins text-darkText text-sm">{t.name}</p>
                   <p className="text-xs text-slate-400 font-inter">{t.major}</p>

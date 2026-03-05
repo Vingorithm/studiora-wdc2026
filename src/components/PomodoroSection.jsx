@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import { MdAccessTimeFilled } from 'react-icons/md';
+import { RiFocus3Line } from 'react-icons/ri';
+import { BsFire } from 'react-icons/bs';
 
 /**
  * PomodoroSection Component
@@ -78,19 +81,22 @@ export default function PomodoroSection() {
           >
             {[
               {
-                icon: '⏱️',
+                icon: <MdAccessTimeFilled />,
                 title: 'Scientifically Proven',
                 desc: 'The Pomodoro Technique is backed by decades of productivity research. 25 minutes of focused work followed by 5-minute breaks maximizes cognitive performance.',
+                color: 'text-blue-500',
               },
               {
-                icon: '🎯',
+                icon: <RiFocus3Line />,
                 title: 'Zero Distractions',
                 desc: 'Enter Focus Mode and block all notifications. Your phone, emails, and messages disappear. Only you and your work exist.',
+                color: 'text-red-500',
               },
               {
-                icon: '📈',
+                icon: <BsFire />,
                 title: 'Track Your Progress',
                 desc: 'Every completed Pomodoro counts toward your daily goal. Watch your focus streaks grow and celebrate your consistency.',
+                color: 'text-orange-500',
               },
             ].map((feature, i) => (
               <motion.div
@@ -101,7 +107,7 @@ export default function PomodoroSection() {
                 viewport={{ once: true }}
                 className="flex gap-4"
               >
-                <div className="text-3xl flex-shrink-0">{feature.icon}</div>
+                <div className={`text-3xl flex-shrink-0 ${feature.color}`}>{feature.icon}</div>
                 <div>
                   <h3 className="font-bold text-[#1E293B] mb-1">{feature.title}</h3>
                   <p className="text-sm text-slate-500 font-inter leading-relaxed">{feature.desc}</p>
