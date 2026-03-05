@@ -6,6 +6,8 @@ import { FaTasks } from "react-icons/fa";
 import { LuNotebook } from "react-icons/lu";
 import { RiFocus3Line } from "react-icons/ri";
 
+import logo from "/icon.png";
+
 /* ─── Data ─────────────────────────────────────────────────────────── */
 
 const features = [
@@ -399,7 +401,11 @@ export default function Home() {
       <footer className="bg-darkText text-white py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-aurora flex items-center justify-center text-white font-bold text-sm">S</div>
+            {logo ?
+              <img className="w-8 h-8 rounded-xl bg-white flex items-center justify-center shadow-soft group-hover:shadow-glow transition-shadow duration-300" src={logo} alt="studiora-logo" /> :
+              <div className="w-8 h-8 rounded-xl bg-aurora flex items-center justify-center text-white font-bold text-lg font-poppins shadow-soft group-hover:shadow-glow transition-shadow duration-300">
+                S
+              </div>}
             <span className="font-bold font-poppins">Studiora</span>
           </div>
           <p className="text-slate-400 font-inter text-sm">© 2026 Studiora. Built for the Web Design Competition 2026.</p>

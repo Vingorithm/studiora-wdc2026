@@ -4,6 +4,7 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { FaTasks } from "react-icons/fa";
 import { LuNotebook } from "react-icons/lu";
 import { RiFocus3Line } from "react-icons/ri";
+import logo from "/icon.png";
 
 const navLinks = [
   { to: '/dashboard', label: 'Dashboard', icon: <TbLayoutDashboardFilled /> },
@@ -11,7 +12,6 @@ const navLinks = [
   { to: '/notes', label: 'Notes', icon: <LuNotebook /> },
   { to: '/focus', label: 'Focus', icon: <RiFocus3Line /> },
 ]
-
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -23,9 +23,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl bg-aurora flex items-center justify-center text-white font-bold text-lg font-poppins shadow-soft group-hover:shadow-glow transition-shadow duration-300">
-              S
-            </div>
+            {logo ?
+              <img className="w-8 h-8 rounded-xl flex items-center justify-center shadow-soft group-hover:shadow-glow transition-shadow duration-300" src={logo} alt="studiora-logo" /> :
+              <div className="w-8 h-8 rounded-xl bg-aurora flex items-center justify-center text-white font-bold text-lg font-poppins shadow-soft group-hover:shadow-glow transition-shadow duration-300">
+                S
+              </div>}
             <span className="text-xl font-bold font-poppins text-darkText">
               Studi<span className="aurora-text">ora</span>
             </span>
