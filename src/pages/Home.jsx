@@ -423,7 +423,7 @@ export default function Home() {
               </div>}
             <span className="font-bold font-poppins">Studiora</span>
           </div>
-          <p className="text-slate-400 font-inter text-sm">© 2026 Studiora. Built for the Web Design Competition 2026.</p>
+          <p className="text-slate-400 font-inter text-sm">© 2026 Studiora. All rights reserved.</p>
           <p className="text-slate-500 text-xs font-inter">Organize. Focus. Excel.</p>
         </div>
       </footer>
