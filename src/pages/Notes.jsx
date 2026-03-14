@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import NoteViewModal from "../components/NoteViewModal";
 import { IoSearchSharp } from "react-icons/io5";
 import NewNoteModal from "../components/NewNoteModal";
+<<<<<<< HEAD
 import usePageTitle from "../hooks/usePageTitle";
 import { useToast } from "../context/ToastContext";
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
 
 const STORAGE_KEY = "studiora_notes";
 
@@ -253,8 +256,11 @@ function EmptyState({ onNew }) {
 }
 
 export default function Notes() {
+<<<<<<< HEAD
   usePageTitle("My Notes");
   const toast = useToast();
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [search, setSearch] = useState("");
@@ -278,6 +284,7 @@ export default function Notes() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(n));
     setNotes(n);
   };
+<<<<<<< HEAD
 
   const handleDelete = (id) => {
     const deletedNote = notes.find((n) => n.id === id);
@@ -290,6 +297,9 @@ export default function Notes() {
       () => saveNotes([...remaining, deletedNote]),
     );
   };
+=======
+  const handleDelete = (id) => saveNotes(notes.filter((n) => n.id !== id));
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
 
   const allTags = [...new Set(notes.flatMap((n) => n.tags || []))];
   const allSubjects = [...new Set(notes.map((n) => n.subject).filter(Boolean))];
@@ -316,6 +326,7 @@ export default function Notes() {
             {allSubjects.length} subject{allSubjects.length !== 1 ? "s" : ""}
           </p>
         </div>
+<<<<<<< HEAD
         <button
           onClick={() => {
             setNoteModalOpen(true);
@@ -324,6 +335,11 @@ export default function Notes() {
         >
           + Create Note
         </button>
+=======
+          <button onClick={() => { setNoteModalOpen(true) }} className="btn-primary text-sm py-2.5 px-5">
+            + Create Note
+          </button>
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
       </div>
 
       {/* Filters */}

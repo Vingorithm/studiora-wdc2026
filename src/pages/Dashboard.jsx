@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+<<<<<<< HEAD
 import usePageTitle from '../hooks/usePageTitle'
 import { getWeekHours } from '../hooks/useStudyData'
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
 import StatCard from '../components/StatCard'
 import { FaTasks } from "react-icons/fa";
 import { MdAccessTimeFilled } from "react-icons/md";
@@ -11,6 +14,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 function getStoredTasks() {
+<<<<<<< HEAD
   try { return JSON.parse(localStorage.getItem('studiora_tasks') || '[]') } catch { return [] }
 }
 function getStoredSessions() {
@@ -18,6 +22,23 @@ function getStoredSessions() {
 }
 function getStreak() {
   try { return parseInt(localStorage.getItem('studiora_streak') || '0') } catch { return 0 }
+=======
+  try {
+    return JSON.parse(localStorage.getItem('studiora_tasks') || '[]')
+  } catch { return [] }
+}
+
+function getStoredSessions() {
+  try {
+    return parseInt(localStorage.getItem('studiora_sessions') || '0')
+  } catch { return 0 }
+}
+
+function getStreak() {
+  try {
+    return parseInt(localStorage.getItem('studiora_streak') || '7')
+  } catch { return 7 }
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
 }
 
 const defaultTasks = [
@@ -28,6 +49,7 @@ const defaultTasks = [
 ]
 
 export default function Dashboard() {
+<<<<<<< HEAD
   usePageTitle('Dashboard')
   const navigate     = useNavigate()
   const chartRef     = useRef(null)
@@ -62,19 +84,47 @@ export default function Dashboard() {
   const total      = tasks.length
 
   // ── Study hours line chart — real persisted data ──────────────────────────
+=======
+  const navigate = useNavigate()
+  const chartRef = useRef(null)
+  const chartInstance = useRef(null)
+  const barRef = useRef(null)
+  const barInstance = useRef(null)
+  const [tasks, setTasks] = useState([])
+  const sessions = getStoredSessions()
+  const streak = getStreak()
+
+  useEffect(() => {
+    const stored = getStoredTasks()
+    setTasks(stored.length ? stored : defaultTasks)
+  }, [])
+
+  const done = tasks.filter(t => t.status === 'Done').length
+  const inProgress = tasks.filter(t => t.status === 'In Progress').length
+  const total = tasks.length
+
+  // Study hours chart
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
   useEffect(() => {
     if (!chartRef.current || typeof Chart === 'undefined') return
     if (chartInstance.current) chartInstance.current.destroy()
 
+<<<<<<< HEAD
     const weekHours = getWeekHours()  // real data from useStudyData
 
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
     chartInstance.current = new Chart(chartRef.current, {
       type: 'line',
       data: {
         labels: DAYS,
         datasets: [{
           label: 'Study Hours',
+<<<<<<< HEAD
           data: weekHours,
+=======
+          data: [4, 6, 5, 8, 7, 9, 6],
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
           borderColor: '#5D8BF4',
           backgroundColor: 'rgba(93, 139, 244, 0.12)',
           borderWidth: 2.5,
@@ -106,9 +156,15 @@ export default function Dashboard() {
       }
     })
     return () => { if (chartInstance.current) chartInstance.current.destroy() }
+<<<<<<< HEAD
   }, [])   // runs once; data is read fresh from localStorage each render
 
   // ── Task doughnut chart ───────────────────────────────────────────────────
+=======
+  }, [])
+
+  // Tasks bar chart
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
   useEffect(() => {
     if (!barRef.current || typeof Chart === 'undefined') return
     if (barInstance.current) barInstance.current.destroy()
@@ -149,23 +205,31 @@ export default function Dashboard() {
 
   const weekDays = DAYS.map((d, i) => {
     const date = new Date()
+<<<<<<< HEAD
     const day  = date.getDay()
+=======
+    const day = date.getDay()
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
     const diff = i - (day === 0 ? 6 : day - 1)
     const target = new Date(date)
     target.setDate(date.getDate() + diff)
     return { label: d, date: target.getDate(), isToday: diff === 0 }
   })
 
+<<<<<<< HEAD
   const totalFocusMinutes = parseInt(localStorage.getItem('studiora_focus_minutes') || '0')
   const focusHours = Math.floor(totalFocusMinutes / 60)
   const focusMins  = totalFocusMinutes % 60
   const focusLabel = focusHours > 0 ? `${focusHours}h ${focusMins}m` : `${focusMins}m`
 
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
+<<<<<<< HEAD
           <h1 className="section-title mb-1">Good morning!</h1>
           <p className="text-slate-500 font-inter text-sm">
             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
@@ -174,34 +238,67 @@ export default function Dashboard() {
         <button onClick={() => navigate('/tasks')} className="btn-primary text-sm py-2.5 px-5">
           + New Task
         </button>
+=======
+          <h1 className="section-title mb-1">Good morning! </h1>
+          <p className="text-slate-500 font-inter text-sm">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={() => navigate('/tasks')} className="btn-primary text-sm py-2.5 px-5">
+            + New Task
+          </button>
+        </div>
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
       </div>
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<<<<<<< HEAD
         <StatCard title="Total Tasks"   value={total}          icon={<FaTasks />}         trend={12} color="primary"   subtitle="This semester" />
         <StatCard title="Focus Time"    value={focusLabel}     icon={<MdAccessTimeFilled />} trend={8} color="secondary" subtitle="All time" />
         <StatCard title="Study Streak"  value={`${streak} days`} icon={<BsFire />}         trend={0}  color="accent"    subtitle="Keep it up!" />
         <StatCard title="Completed"     value={done}           icon={<FaCircleCheck />}   trend={15} color="success"   subtitle={`of ${total} tasks`} />
+=======
+        <StatCard title="Total Tasks" value={total} icon=<FaTasks /> trend={12} color="primary" subtitle="This semester" />
+        <StatCard title="Focus Hours" value={`${sessions + 12}h`} icon=<MdAccessTimeFilled /> trend={8} color="secondary" subtitle="This week" />
+        <StatCard title="Study Streak" value={`${streak} days`} icon=<BsFire /> trend={0} color="accent" subtitle="Keep it up!" />
+        <StatCard title="Completed" value={done} icon=<FaCircleCheck /> trend={15} color="success" subtitle={`of ${total} tasks`} />
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
       </div>
 
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<<<<<<< HEAD
+=======
+        {/* Study Hours Chart */}
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
         <div className="card lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold font-poppins text-darkText">Weekly Study Hours</h2>
             <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-lg font-semibold font-inter">This Week</span>
           </div>
           <div style={{ height: '200px' }}>
+<<<<<<< HEAD
             <canvas ref={chartRef} aria-label="Weekly study hours chart" role="img" />
           </div>
         </div>
 
+=======
+            <canvas ref={chartRef} />
+          </div>
+        </div>
+
+        {/* Task status doughnut */}
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
         <div className="card">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold font-poppins text-darkText">Task Status</h2>
           </div>
           <div style={{ height: '200px' }}>
+<<<<<<< HEAD
             <canvas ref={barRef} aria-label="Task status distribution chart" role="img" />
+=======
+            <canvas ref={barRef} />
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
           </div>
         </div>
       </div>
@@ -222,6 +319,7 @@ export default function Dashboard() {
           ) : (
             <div className="space-y-3">
               {todayTasks.map(task => (
+<<<<<<< HEAD
                 <div
                   key={task.id}
                   className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-primary/5 transition-colors cursor-pointer"
@@ -232,6 +330,10 @@ export default function Dashboard() {
                   aria-label={`Go to ${task.title}`}
                 >
                   <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${task.priority === 'High' ? 'bg-danger' : task.priority === 'Medium' ? 'bg-accent' : 'bg-success'}`} aria-hidden="true" />
+=======
+                <div key={task.id} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-primary/5 transition-colors cursor-pointer" onClick={() => navigate('/tasks')}>
+                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${task.priority === 'High' ? 'bg-danger' : task.priority === 'Medium' ? 'bg-accent' : 'bg-success'}`} />
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold font-poppins text-darkText truncate">{task.title}</p>
                     <p className="text-xs text-slate-400 font-inter">{task.subject}</p>
@@ -255,13 +357,22 @@ export default function Dashboard() {
             {weekDays.map(day => (
               <div key={day.label} className="flex flex-col items-center gap-1">
                 <span className="text-xs text-slate-400 font-inter font-medium">{day.label}</span>
+<<<<<<< HEAD
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold font-poppins transition-all ${day.isToday ? 'bg-aurora text-white shadow-soft' : 'text-darkText hover:bg-primary/5'}`}>
+=======
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold font-poppins transition-all ${day.isToday ? 'bg-aurora text-white shadow-soft' : 'text-darkText hover:bg-primary/5'
+                  }`}>
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
                   {day.date}
                 </div>
               </div>
             ))}
           </div>
 
+<<<<<<< HEAD
+=======
+          {/* Upcoming deadlines */}
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
           <div className="mt-4 space-y-2">
             <p className="text-xs font-semibold text-slate-500 font-inter uppercase tracking-wide mb-3">Upcoming Deadlines</p>
             {tasks.filter(t => t.deadline && t.status !== 'Done').slice(0, 3).map(task => {
@@ -275,9 +386,12 @@ export default function Dashboard() {
                 </div>
               )
             })}
+<<<<<<< HEAD
             {tasks.filter(t => t.deadline && t.status !== 'Done').length === 0 && (
               <p className="text-xs text-slate-300 font-inter italic">No upcoming deadlines.</p>
             )}
+=======
+>>>>>>> 15eb2b3c6908e7c695a5487d330defb113f86b40
           </div>
         </div>
       </div>
