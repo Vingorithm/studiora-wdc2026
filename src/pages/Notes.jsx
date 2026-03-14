@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import NoteViewModal from "../components/NoteViewModal";
 import { IoSearchSharp } from "react-icons/io5";
 import NewNoteModal from "../components/NewNoteModal";
+import usePageTitle from "../hooks/usePageTitle";
+import { useToast } from "../context/ToastContext";
 
 const STORAGE_KEY = "studiora_notes";
 
@@ -251,6 +253,8 @@ function EmptyState({ onNew }) {
 }
 
 export default function Notes() {
+  usePageTitle("My Notes");
+  const toast = useToast();
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [search, setSearch] = useState("");
@@ -274,7 +278,18 @@ export default function Notes() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(n));
     setNotes(n);
   };
-  const handleDelete = (id) => saveNotes(notes.filter((n) => n.id !== id));
+
+  const handleDelete = (id) => {
+    const deletedNote = notes.find((n) => n.id === id);
+    const remaining = notes.filter((n) => n.id !== id);
+    saveNotes(remaining);
+    toast(
+      `"${deletedNote?.title || "Note"}" deleted`,
+      "info",
+      5000,
+      () => saveNotes([...remaining, deletedNote]),
+    );
+  };
 
   const allTags = [...new Set(notes.flatMap((n) => n.tags || []))];
   const allSubjects = [...new Set(notes.map((n) => n.subject).filter(Boolean))];
@@ -301,9 +316,14 @@ export default function Notes() {
             {allSubjects.length} subject{allSubjects.length !== 1 ? "s" : ""}
           </p>
         </div>
-          <button onClick={() => { setNoteModalOpen(true) }} className="btn-primary text-sm py-2.5 px-5">
-            + Create Note
-          </button>
+        <button
+          onClick={() => {
+            setNoteModalOpen(true);
+          }}
+          className="btn-primary text-sm py-2.5 px-5"
+        >
+          + Create Note
+        </button>
       </div>
 
       {/* Filters */}
