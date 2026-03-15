@@ -283,11 +283,8 @@ export default function Notes() {
     const deletedNote = notes.find((n) => n.id === id);
     const remaining = notes.filter((n) => n.id !== id);
     saveNotes(remaining);
-    toast(
-      `"${deletedNote?.title || "Note"}" deleted`,
-      "info",
-      5000,
-      () => saveNotes([...remaining, deletedNote]),
+    toast(`"${deletedNote?.title || "Note"}" deleted`, "info", 5000, () =>
+      saveNotes([...remaining, deletedNote]),
     );
   };
 
@@ -435,7 +432,6 @@ export default function Notes() {
             setViewNote(null);
           }}
           onEdit={(note) => {
-            setViewNote(null);
             setEditingNote(note);
             setNoteModalOpen(true);
           }}
