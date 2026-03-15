@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { ToastProvider } from './context/ToastContext' 
+import { seedAllData, resetAndReseed } from './data/seedData'
 import './index.css'
+
+seedAllData();
+
+if (import.meta.env.DEV || import.meta.env.VITE_DEMO_MODE === 'true') {
+  window.resetAndReseed = resetAndReseed
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
