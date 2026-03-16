@@ -1,7 +1,11 @@
-// src/components/NewNoteModal.jsx
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { LiaHashtagSolid } from 'react-icons/lia'
 import BaseModal from './BaseModal'
+import { FaBook } from 'react-icons/fa6'
+import { FaAlignLeft, FaAlignCenter, FaAlignRight } from 'react-icons/fa'
+import { MdOutlineCheckBox, MdFormatListBulleted } from 'react-icons/md'
+import { TbListNumbers } from 'react-icons/tb'
+import { PiStarFourFill } from 'react-icons/pi'
 
 // ─── Storage helpers ──────────────────────────────────────────────────────────
 const STORAGE_KEY = 'studiora_notes'
@@ -12,40 +16,94 @@ function saveNotes(notes) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(notes))
 }
 
-// ─── Formatting toolbar ───────────────────────────────────────────────────────
+// ─── Toolbar config ───────────────────────────────────────────────────────────
 const TOOLS = [
-  { cmd: 'bold',                label: 'B',  title: 'Bold',          style: 'font-bold'     },
-  { cmd: 'italic',              label: 'I',  title: 'Italic',        style: 'italic'        },
-  { cmd: 'underline',           label: 'U',  title: 'Underline',     style: 'underline'     },
-  { cmd: 'highlight',           label: '✦', title: 'Highlight',     style: ''              },
+  { cmd: 'bold', label: 'B', title: 'Bold', style: 'font-bold' },
+  { cmd: 'italic', label: 'I', title: 'Italic', style: 'italic' },
+  { cmd: 'underline', label: 'U', title: 'Underline', style: 'underline' },
+  { cmd: 'strikeThrough', label: 'S', title: 'Strikethrough', style: 'line-through' },
   { divider: true },
-  { cmd: 'h1',                  label: 'H1', title: 'Heading 1',     style: 'font-bold text-xs' },
-  { cmd: 'h2',                  label: 'H2', title: 'Heading 2',     style: 'font-bold text-xs' },
+  { cmd: 'h1', label: 'H1', title: 'Heading 1', style: 'font-bold text-xs' },
+  { cmd: 'h2', label: 'H2', title: 'Heading 2', style: 'font-bold text-xs' },
+  { cmd: 'h3', label: 'H3', title: 'Heading 3', style: 'font-bold text-xs' },
   { divider: true },
-  { cmd: 'insertUnorderedList', label: '•—', title: 'Bullet list',   style: 'text-sm'       },
-  { cmd: 'insertOrderedList',   label: '1.', title: 'Numbered list', style: 'text-xs font-bold' },
-  { cmd: 'checklist',           label: '☑', title: 'Checklist',     style: ''              },
+  { cmd: 'insertUnorderedList', label: <MdFormatListBulleted />, title: 'Bullet list', style: 'text-sm' },
+  { cmd: 'insertOrderedList', label: <TbListNumbers />, title: 'Numbered list', style: 'text-xs font-bold' },
+  { cmd: 'checklist', label: <MdOutlineCheckBox />, title: 'Checklist', style: '' },
   { divider: true },
-  { cmd: 'removeFormat',        label: '✕', title: 'Clear format',  style: 'text-xs'       },
+  { cmd: 'justifyLeft', label: <FaAlignLeft />, title: 'Align left', style: 'text-xs' },
+  { cmd: 'justifyCenter', label: <FaAlignCenter />, title: 'Align center', style: 'text-xs' },
+  { cmd: 'justifyRight', label: <FaAlignRight />, title: 'Align right', style: 'text-xs' },
+  { divider: true },
+  { cmd: 'removeFormat', label: '✕', title: 'Clear format', style: 'text-xs' },
 ]
 
-function NoteToolbar({ editorRef }) {
+// ─── Highlight toggle (note-level star) ───────────────────────────────────────
+function HighlightToggle({ highlighted, onChange }) {
+  return (
+    <button
+      type="button"
+      title={highlighted ? 'Remove highlight' : 'Mark as highlighted'}
+      aria-label={highlighted ? 'Remove highlight' : 'Mark note as highlighted'}
+      aria-pressed={highlighted}
+      onMouseDown={e => { e.preventDefault(); onChange(!highlighted) }}
+      className={`
+        flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold font-inter
+        border transition-all duration-200 select-none
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50
+        ${highlighted
+          ? 'bg-amber-400 border-amber-400 text-white shadow-[0_0_12px_rgba(251,191,36,0.55)]'
+          : 'bg-white border-slate-200 text-slate-400 hover:border-amber-300 hover:text-amber-500 hover:bg-amber-50'
+        }
+      `}
+    >
+      <PiStarFourFill className={`text-sm transition-transform duration-200 ${highlighted ? 'scale-110' : ''}`} />
+      <span>{highlighted ? 'Highlighted' : 'Highlight'}</span>
+    </button>
+  )
+}
+
+// ─── Formatting toolbar ───────────────────────────────────────────────────────
+function NoteToolbar({ editorRef, setHighlighted }) {
+  // Track selection changes to update active state
+  const [, forceUpdate] = useState(0)
+
+  useEffect(() => {
+    const onSelectionChange = () => forceUpdate(n => n + 1)
+    document.addEventListener('selectionchange', onSelectionChange)
+    return () => document.removeEventListener('selectionchange', onSelectionChange)
+  }, [])
+
   const exec = (cmd) => {
     const ed = editorRef.current
     if (!ed) return
     ed.focus()
-    if (cmd === 'highlight') { document.execCommand('hiliteColor', false, '#FEF9C3'); return }
-    if (cmd === 'h1')        { document.execCommand('formatBlock',  false, '<h1>');   return }
-    if (cmd === 'h2')        { document.execCommand('formatBlock',  false, '<h2>');   return }
+
+    if (cmd === 'h1') { document.execCommand('formatBlock', false, '<h1>'); forceUpdate(n => n + 1); return }
+    if (cmd === 'h2') { document.execCommand('formatBlock', false, '<h2>'); forceUpdate(n => n + 1); return }
+    if (cmd === 'h3') { document.execCommand('formatBlock', false, '<h3>'); forceUpdate(n => n + 1); return }
+
+    if (cmd === 'removeFormat') {
+      // 1. Reset heading block back to plain paragraph first
+      document.execCommand('formatBlock', false, '<p>')
+      // 2. Strip bold / italic / underline / strikethrough / font-size etc.
+      document.execCommand('removeFormat', false, null)
+      // 3. Strip highlight (backColor)
+      document.execCommand('backColor', false, 'transparent')
+      setHighlighted(false)
+      forceUpdate(n => n + 1)
+      return
+    }
+
     if (cmd === 'checklist') {
       const sel = window.getSelection()
       if (!sel?.rangeCount) return
       const range = sel.getRangeAt(0)
       const label = document.createElement('label')
-      label.className     = 'checklist-item'
+      label.className = 'checklist-item'
       label.contentEditable = 'false'
-      const cb  = document.createElement('input')
-      cb.type   = 'checkbox'
+      const cb = document.createElement('input')
+      cb.type = 'checkbox'
       cb.className = 'mr-2 accent-primary'
       const span = document.createElement('span')
       span.contentEditable = 'true'
@@ -55,19 +113,20 @@ function NoteToolbar({ editorRef }) {
       wrapper.appendChild(label)
       range.deleteContents()
       range.insertNode(wrapper)
-      range.collapse(false)
-      sel.removeAllRanges()
-      sel.addRange(range)
+      sel.collapse(wrapper, wrapper.childNodes.length)
       return
     }
+
     document.execCommand(cmd, false, null)
+    forceUpdate(n => n + 1)
   }
 
   const isActive = (cmd) => {
     try {
-      if (cmd === 'h1') return document.queryCommandValue('formatBlock') === 'h1'
-      if (cmd === 'h2') return document.queryCommandValue('formatBlock') === 'h2'
-      if (['highlight', 'checklist', 'removeFormat'].includes(cmd)) return false
+      if (cmd === 'h1') return document.queryCommandValue('formatBlock').toLowerCase() === 'h1'
+      if (cmd === 'h2') return document.queryCommandValue('formatBlock').toLowerCase() === 'h2'
+      if (cmd === 'h3') return document.queryCommandValue('formatBlock').toLowerCase() === 'h3'
+      if (['checklist', 'removeFormat'].includes(cmd)) return false
       return document.queryCommandState(cmd)
     } catch { return false }
   }
@@ -147,20 +206,22 @@ function TagInput({ tags, onChange }) {
 export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
   const editorRef = useRef(null)
 
-  const [title,     setTitle]     = useState('')
-  const [subject,   setSubject]   = useState('')
-  const [tags,      setTags]      = useState([])
+  const [title, setTitle] = useState('')
+  const [subject, setSubject] = useState('')
+  const [tags, setTags] = useState([])
   const [wordCount, setWordCount] = useState(0)
-  const [saved,     setSaved]     = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [highlighted, setHighlighted] = useState(false)
 
   // Populate fields when opening
   useEffect(() => {
     if (!isOpen) return
     setSaved(false)
-    const src = editNote || { title: '', subject: '', tags: [], content: '' }
+    const src = editNote || { title: '', subject: '', tags: [], content: '', highlighted: false }
     setTitle(src.title || '')
     setSubject(src.subject || '')
     setTags(src.tags || [])
+    setHighlighted(!!src.highlighted)   // ← restore highlight status from saved note
     setTimeout(() => {
       if (editorRef.current) {
         editorRef.current.innerHTML = src.content || ''
@@ -174,31 +235,33 @@ export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
     setWordCount(text.trim().split(/\s+/).filter(Boolean).length)
   }
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     const content = editorRef.current?.innerHTML ?? ''
-    const notes   = loadNotes()
+    const notes = loadNotes()
     if (editNote) {
       saveNotes(notes.map(n =>
         String(n.id) === String(editNote.id)
-          ? { ...n, title: title || 'Untitled Note', subject, content, tags, updatedAt: new Date().toISOString() }
+          ? { ...n, title: title || 'Untitled Note', subject, content, tags, highlighted, updatedAt: new Date().toISOString() }
           : n
       ))
     } else {
       saveNotes([{
         id: Date.now(),
         title: title || 'Untitled Note',
-        subject, content, tags,
-        highlighted: false,
+        subject,
+        content,
+        tags,
+        highlighted,           // ← use actual state, not hardcoded false
         checklist: [],
-        createdAt:  new Date().toISOString(),
-        updatedAt:  new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }, ...notes])
     }
     setSaved(true)
     setTimeout(onClose, 600)
-  }
+  }, [title, subject, tags, highlighted, editNote, onClose])
 
-  // Ctrl+S shortcut — ESC is handled by BaseModal
+  // Ctrl+S / Cmd+S shortcut
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e) => {
@@ -206,7 +269,7 @@ export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [isOpen, title, subject, tags]) // eslint-disable-line
+  }, [isOpen, handleSave])
 
   const headerSubtitle = saved
     ? '✓ Saved!'
@@ -214,14 +277,42 @@ export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
 
   return (
     <BaseModal isOpen={isOpen} onClose={onClose} id="new-note" showAuroraBar>
-      {/* Header */}
-      <BaseModal.Header
-        id="new-note"
-        icon="✍️"
-        title={editNote ? 'Edit Note' : 'New Note'}
-        subtitle={headerSubtitle}
-        onClose={onClose}
-      />
+      {/* Header (custom — includes HighlightToggle) */}
+      <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-slate-100 flex-shrink-0 gap-3">
+        {/* Left: icon + title/subtitle */}
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-base flex-shrink-0"
+            style={{ background: 'linear-gradient(135deg,#5D8BF4,#C4B5FD)' }}
+            aria-hidden="true"
+          >
+            <FaBook />
+          </div>
+          <div className="min-w-0">
+            <h2
+              id="new-note-title"
+              className="text-sm font-bold font-poppins text-darkText leading-snug truncate"
+            >
+              {editNote ? 'Edit Note' : 'New Note'}
+            </h2>
+            <p className="text-xs text-slate-400 font-inter leading-none mt-0.5">
+              {headerSubtitle}
+            </p>
+          </div>
+        </div>
+
+        {/* Centre-right: Highlight toggle */}
+        <HighlightToggle highlighted={highlighted} onChange={setHighlighted} />
+
+        {/* Right: close */}
+        <button
+          onClick={onClose}
+          aria-label="Close dialog"
+          className="w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all duration-150 text-lg leading-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:outline-none"
+        >
+          ×
+        </button>
+      </div>
 
       {/* Body */}
       <BaseModal.Body>
@@ -254,9 +345,14 @@ export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
 
         <div className="border-t border-slate-100 mb-4" />
 
-        {/* Toolbar */}
-        <div className="mb-3">
-          <NoteToolbar editorRef={editorRef} />
+        {/* Toolbar + Highlight toggle */}
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex-1 min-w-0">
+            <NoteToolbar
+              editorRef={editorRef}
+              setHighlighted={setHighlighted}
+            />
+          </div>
         </div>
 
         {/* Editor */}
@@ -288,7 +384,7 @@ export default function NewNoteModal({ isOpen, onClose, editNote = null }) {
           className="text-sm font-semibold font-inter text-white px-6 py-2 rounded-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:outline-none"
           style={{ background: 'linear-gradient(135deg,#5D8BF4,#C4B5FD)', boxShadow: '0 4px 14px rgba(93,139,244,0.28)' }}
         >
-          {saved ? '✓ Saved!' : editNote ? '✓ Update Note' : '✓ Save Note'}
+          {saved ? '✓ Saved!' : editNote ? 'Update Note' : 'Save Note'}
         </button>
       </BaseModal.Footer>
     </BaseModal>

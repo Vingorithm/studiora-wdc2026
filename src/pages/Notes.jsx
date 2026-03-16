@@ -5,6 +5,8 @@ import { IoSearchSharp } from "react-icons/io5";
 import NewNoteModal from "../components/NewNoteModal";
 import usePageTitle from "../hooks/usePageTitle";
 import { useToast } from "../context/ToastContext";
+import { MdDelete } from "react-icons/md";
+import { PiStarFourFill } from "react-icons/pi";
 
 const STORAGE_KEY = "studiora_notes";
 
@@ -157,18 +159,18 @@ function NoteCard({ note, onView, onDelete }) {
             </button>
             <button
               onClick={() => onDelete(note.id)}
-              className="text-xs font-semibold font-inter px-2.5 py-1.5 rounded-lg text-slate-400 hover:bg-danger/10 hover:text-danger transition-all duration-200"
+              className="text-s font-semibold font-inter px-2.5 py-1.5 rounded-lg text-slate-400 hover:bg-danger/10 hover:text-danger transition-all duration-200"
             >
-              🗑
+              <MdDelete/>
             </button>
           </div>
         </div>
       </div>
 
       {note.highlighted && (
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-5 right-5 text-yellow-400">
           <span className="text-sm" title="Highlighted">
-            ✨
+            <PiStarFourFill/>
           </span>
         </div>
       )}
@@ -246,7 +248,7 @@ function EmptyState({ onNew }) {
         exams.
       </p>
       <button onClick={onNew} className="btn-primary px-8 py-3 text-sm">
-        ✍️ Write your first note
+        Write your first note
       </button>
     </div>
   );

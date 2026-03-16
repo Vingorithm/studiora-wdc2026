@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { MdDelete, MdEdit } from 'react-icons/md'
 
 const subjectColors = [
   'from-blue-400 to-indigo-500',
@@ -48,13 +49,13 @@ export default function NoteCard({ note, onEdit, onDelete }) {
                   onClick={() => { onEdit(note); setShowMenu(false) }}
                   className="w-full text-left px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 font-inter"
                 >
-                  ✏️ Edit
+                  <MdEdit/> Edit
                 </button>
                 <button
                   onClick={() => { onDelete(note.id); setShowMenu(false) }}
                   className="w-full text-left px-3 py-2 text-sm text-danger hover:bg-red-50 font-inter"
                 >
-                  🗑 Delete
+                  <MdDelete/> Delete
                 </button>
               </div>
             )}

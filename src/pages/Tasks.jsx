@@ -1,4 +1,3 @@
-// src/pages/Tasks.jsx
 import { useState, useEffect, useRef, useCallback } from "react";
 import usePageTitle from "../hooks/usePageTitle";
 import useFocusTrap from "../hooks/useFocusTrap";

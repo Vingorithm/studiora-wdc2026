@@ -1,4 +1,3 @@
-// src/components/NoteViewModal.jsx
 import { useEffect } from 'react'
 import { MdEdit, MdDelete } from 'react-icons/md'
 import { FaBook } from 'react-icons/fa6'
@@ -81,12 +80,6 @@ export default function NoteViewModal({ note, onClose, onDelete, onEdit }) {
         >
           <MdDelete size={15} aria-hidden="true" />
           Delete
-        </button>
-        <button
-          onClick={onClose}
-          className="btn-secondary text-sm py-2.5 px-5 ml-auto focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:outline-none"
-        >
-          Close
         </button>
       </BaseModal.Footer>
     </BaseModal>
