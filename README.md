@@ -75,7 +75,7 @@ The card-based layout makes your notes easy to read and revisit when studying or
 
 ### 4. Focus Timer
 
-The Focus Timer helps you stay concentrated while studying.
+The Focus Timer is designed to help users maintain concentration and improve productivity while studying by applying the Pomodoro technique, a time management method that divides work into focused intervals followed by short breaks.
 
 It includes:
 
